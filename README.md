@@ -1,0 +1,2 @@
+# ginger
+small c++ game
