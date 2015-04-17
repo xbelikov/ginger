@@ -46,7 +46,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\projects\cpp\SFML-2.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\projects\cpp\tinyxml;D:\projects\cpp\SFML-2.2\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -74,12 +74,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\..\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\source\animation\animation.cpp" />
+    <ClCompile Include="..\source\animation\animation_list.cpp" />
     <ClCompile Include="..\source\game\game.cpp" />
+    <ClCompile Include="..\source\logger\logger.cpp" />
     <ClCompile Include="..\source\main\main.cpp" />
+    <ClCompile Include="..\source\scene\scene.cpp" />
+    <ClCompile Include="..\source\utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\animation\animation.h" />
+    <ClInclude Include="..\source\animation\animation_list.h" />
     <ClInclude Include="..\source\game\game.h" />
+    <ClInclude Include="..\source\logger\logger.h" />
     <ClInclude Include="..\source\main\main.h" />
+    <ClInclude Include="..\source\scene\scene.h" />
+    <ClInclude Include="..\source\utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

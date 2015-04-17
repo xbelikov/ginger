@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы исходного кода\tinyxml">
+      <UniqueIdentifier>{6411c5f6-287a-4865-bbaf-d7cdab90ea1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\animation">
+      <UniqueIdentifier>{fddb9a23-5c44-4601-ad76-af8135db629c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\animation">
+      <UniqueIdentifier>{d6c794bb-c8fa-4e08-b24b-a5fa676490ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\utils">
+      <UniqueIdentifier>{34b6d44b-e886-4a79-99cb-00d50557fe2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\utils">
+      <UniqueIdentifier>{86e082e3-ad4d-485f-abd3-1d25e876182b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main\main.cpp">
@@ -21,6 +36,33 @@
     <ClCompile Include="..\source\game\game.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\logger\logger.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\scene\scene.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tinyxml\tinystr.cpp">
+      <Filter>Файлы исходного кода\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tinyxml\tinyxml.cpp">
+      <Filter>Файлы исходного кода\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tinyxml\tinyxmlerror.cpp">
+      <Filter>Файлы исходного кода\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tinyxml\tinyxmlparser.cpp">
+      <Filter>Файлы исходного кода\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\animation\animation.cpp">
+      <Filter>Файлы исходного кода\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\animation\animation_list.cpp">
+      <Filter>Файлы исходного кода\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\utils\utils.cpp">
+      <Filter>Файлы исходного кода\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\main\main.h">
@@ -28,6 +70,21 @@
     </ClInclude>
     <ClInclude Include="..\source\game\game.h">
       <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\logger\logger.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\scene\scene.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\animation\animation.h">
+      <Filter>Заголовочные файлы\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\animation\animation_list.h">
+      <Filter>Заголовочные файлы\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\utils\utils.h">
+      <Filter>Заголовочные файлы\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

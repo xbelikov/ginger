@@ -2,8 +2,8 @@
 
 int main()
 {
-	std::cout << "Start ginger::Game";
-	
+	setlocale(LC_ALL, "Rus");
+
 	ginger::Game game;
 
 	if(game.start()) {

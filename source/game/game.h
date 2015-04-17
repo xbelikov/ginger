@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include "../logger/logger.h"
+#include "../scene/scene.h"
 
 namespace ginger {
 
@@ -23,8 +25,15 @@ namespace ginger {
 		void cycle();
 
 	private:
-		sf::RenderWindow*	_window = 0;
-		wchar_t*			_gameTitle = L"Ginger";
+		const wchar_t*							_gameTitle = L"Ginger";
+
+		sf::RenderWindow*						_window = 0;
+
+		ginger::Logger							_log;
+
+		//std::map<std::wstring, ginger::Scene>	_scenes;
+		//ginger::Scene*						_currentScene = 0;
+		//void									_drawScene(ginger::Scene& scene);
 	};
 
 }
