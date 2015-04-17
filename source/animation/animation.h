@@ -14,6 +14,8 @@ namespace ginger {
 		
 		void setPosition(float x, float y);
 		void getPosition(sf::Vector2f& v);
+		sf::IntRect getTargetRect();
+		void updateTextureRect();
 		void reset();
 		void tick(float time);
 

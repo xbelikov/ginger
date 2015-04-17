@@ -49,6 +49,7 @@ namespace ginger {
 
 		if (!eqTitles) {
 			_curAnim = &_list[animTitle];
+			_curAnim->updateTextureRect();
 		}
 
 		if (hasAnim) {

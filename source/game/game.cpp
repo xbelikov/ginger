@@ -23,8 +23,17 @@ namespace ginger {
 
 		_log.add(L"запускаем цикл");
 		
-		ginger::Player player(&_log);
+		ginger::Player	player(&_log);
 
+		/* --- доавим тестовую землю --- */
+		std::vector<ginger::SceneObject> objects;
+		ginger::SceneObject ground;
+		ground.boundingBox = sf::FloatRect(5.0f, 300.0f, 100.0f, 10.0f);
+		ground.collision = true;
+
+		objects.push_back(ground);
+
+		/* --- */
 		_window->setVerticalSyncEnabled(true);
 
 		while (_window->isOpen())
@@ -39,10 +48,16 @@ namespace ginger {
 				}
 			}
 
-			player.update(time);
+			player.update(time, objects);
 
 			_window->clear();
+			
 			_window->draw(player);
+
+			for (std::vector<ginger::SceneObject>::iterator it = objects.begin(); it != objects.end(); ++it) {
+				_window->draw(*it);
+			}
+
 			_window->display();
 
 			time = clock.getElapsedTime().asMilliseconds();

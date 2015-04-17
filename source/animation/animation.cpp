@@ -33,20 +33,12 @@ namespace ginger {
 
 	void Animation::tick(float time)
 	{
-		sf::IntRect targetRect;
-
 		if (!isPlaying) {
 			return;
 		}
 
 		if (_currentTick > (speed) || !_currentTick) {
-			if (!flip) {
-				targetRect = _frames[_currentFrame];
-			} else {
-				targetRect = _framesFlip[_currentFrame];
-			}
-
-			_sprite.setTextureRect(targetRect);
+			updateTextureRect();
 
 			if (_currentFrame == (_frames.size()-1)) {
 				_currentFrame = 0;
@@ -64,5 +56,21 @@ namespace ginger {
 	{
 		_currentTick = 0;
 		_currentFrame = 0;
+	}
+
+	sf::IntRect Animation::getTargetRect()
+	{
+		if (!flip) {
+			return _frames[_currentFrame];
+		}
+		else {
+			return _framesFlip[_currentFrame];
+		}
+	}
+
+	void Animation::updateTextureRect()
+	{
+		sf::IntRect targetRect = getTargetRect();
+		_sprite.setTextureRect(targetRect);
 	}
 }
