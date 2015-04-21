@@ -2,3 +2,4 @@ build
 vs_project/Debug/
 vs_project/Release/
 *.opensdf
+vs_project/ginger.log

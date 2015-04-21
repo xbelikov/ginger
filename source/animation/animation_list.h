@@ -17,6 +17,7 @@ namespace ginger {
 		void flip(bool f);
 		void tick(float time);
 		void pause();
+		void setTransparentColor(sf::Color color);
 
 	private:
 		sf::Texture			_texture;

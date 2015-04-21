@@ -1,26 +1,26 @@
 <!DOCTYPE SpriteDecomposer>
 <sprites image="ginger.png" transparentColor="00FF01">
  <animation title="idle" delay="40">
-  <cut w="24" x="296" y="268" h="49" row="1" col="1"/>
+  <cut w="24" x="296" y="252" h="66" row="1" col="1"/>
  </animation>
- <animation title="run" delay="40">
-  <cut w="32" x="552" y="200" h="47" row="1" col="1"/>
-  <cut w="35" x="597" y="200" h="47" row="1" col="1"/>
-  <cut w="32" x="648" y="200" h="47" row="1" col="1"/>
-  <cut w="24" x="696" y="200" h="47" row="1" col="1"/>
-  <cut w="28" x="732" y="200" h="47" row="1" col="1"/>
-  <cut w="40" x="8" y="268" h="49" row="1" col="1"/>
+ <animation title="run" delay="60">
+  <cut w="32" x="552" y="182" h="66" row="1" col="1"/>
+  <cut w="35" x="597" y="182" h="66" row="1" col="1"/>
+  <cut w="32" x="648" y="182" h="66" row="1" col="1"/>
+  <cut w="24" x="696" y="182" h="66" row="1" col="1"/>
+  <cut w="28" x="732" y="182" h="66" row="1" col="1"/>
+  <cut w="40" x="8" y="249" h="66" row="1" col="1"/>
  </animation>
  <animation title="hit" delay="40">
-  <cut w="27" x="13" y="24" h="58" row="1" col="1"/>
+  <cut w="27" x="13" y="16" h="66" row="1" col="1"/>
   <cut w="32" x="48" y="16" h="66" row="1" col="1"/>
   <cut w="28" x="92" y="16" h="66" row="1" col="1"/>
   <cut w="62" x="138" y="16" h="66" row="1" col="1"/>
   <cut w="71" x="217" y="16" h="66" row="1" col="1"/>
-  <cut w="71" x="297" y="25" h="57" row="1" col="1"/>
-  <cut w="68" x="379" y="32" h="50" row="1" col="1"/>
+  <cut w="71" x="297" y="16" h="66" row="1" col="1"/>
+  <cut w="68" x="379" y="16" h="66" row="1" col="1"/>
  </animation>
  <animation title="jump" delay="150">
-  <cut w="33" x="807" y="102" h="49" row="1" col="1"/>
+  <cut w="33" x="807" y="82" h="66" row="1" col="1"/>
  </animation>
 </sprites>

@@ -54,6 +54,7 @@ namespace ginger {
 		bool	onGround = true;
 		int		health = 100;
 		bool	jump = false;
+		bool	jumpLimit = false;
 
 		sf::IntRect boundingBox;
 	private:
@@ -66,7 +67,7 @@ namespace ginger {
 		ginger::AnimationList	_anim;
 
 		const char*				_xmlFilePath = "../assets/animations/ginger.xml";
-		const char*				_texFilePath = "../assets/ginger.png";
+		const char*				_texFilePath = "../assets/images/ginger_with_alpha.png";
 
 		ginger::Logger*			_log;
 		float					_x = 0.0f;

@@ -76,4 +76,11 @@ namespace ginger {
 	{
 		_curAnim->isPlaying = false;
 	}
+
+	void AnimationList::setTransparentColor(sf::Color color)
+	{
+		sf::Image img = _texture.copyToImage();
+		img.createMaskFromColor(color);
+		_texture.loadFromImage(img);
+	}
 }

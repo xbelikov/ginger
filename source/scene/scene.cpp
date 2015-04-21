@@ -33,10 +33,13 @@ namespace ginger {
 		/* --- TODO: надо из этих атрибутов настраивать текстуру --- */
 		std::string	textureFile = head->Attribute("image");
 		std::string	transparentColor = head->Attribute("transparentColor");
+		sf::Color tColor;
+		//ginger::getColorFromHex(transparentColor, tColor);
 		/* --- */
 
 		/* --- FIXME: выше написал --- */
 		_anim.loadTexture(_texFilePath);
+		_anim.setTransparentColor(tColor);
 		_log->add(_texFilePath);
 		/* --- */
 
@@ -87,9 +90,9 @@ namespace ginger {
 		
 		if (!boundingBox.height && !boundingBox.width) {
 			sf::Sprite* s = _anim.getCurrentFrame();
-			//FIXME: не работает
 			boundingBox = s->getTextureRect();
 		}
+		
 		/* --- collision test --- */
 		for (std::vector<ginger::SceneObject>::iterator it = objects.begin(); it != objects.end(); ++it) {
 			sf::Vector2f	l((float) _x, (float) _y), 
@@ -98,55 +101,71 @@ namespace ginger {
 							b((float) (_x + boundingBox.width / 2), (float) _y + boundingBox.height);
 
 
-			if (it->collDetect(l)) {
+			if (!collisionTestLeft && it->collDetect(l)) {
 				collisionTestLeft = true;
 				_log->add(L"collisionTestLeft = true;");
 			}
 
-			if (it->collDetect(r)) {
+			if (!collisionTestRight && it->collDetect(r)) {
 				collisionTestRight = true;
 				_log->add(L"collisionTestRight = true;");
 			}
 
-			if (it->collDetect(t)) {
+			if (!collisionTestTop && it->collDetect(t)) {
 				collisionTestTop = true;
 				_log->add(L"collisionTestTop = true;");
 			}
 
-			if (it->collDetect(b)) {
+			if (!collisionTestBottom && it->collDetect(b)) {
 				onGround = true;
+				jumpLimit = false;
 				collisionTestBottom = true;
 				_log->add(L"onGround = true;");
-			} else {
-				onGround = false;
-				_log->add(L"onGround = false;");
 			}
 		}
 		/* --- */
+
+		if (!collisionTestBottom) {
+			onGround = false;
+		}
 
 
 		/* --- keycheck --- */
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			if (!collisionTestLeft) {
-				_x -= time * 0.3;
+				_x -= time * 0.2;
 			}
+
 			_flip = true;
 		} 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			if (!collisionTestRight) {
-				_x += time * 0.3;
+				_x += time * 0.2;
 			}
 
 			_flip = false;
 		}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-				jump = true;
-
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				
 				animTitle = L"jump";
-				_yJumpStart = _y;
+				
+				if (!jump && onGround) {
+					_yJumpStart = _y; 
+				}
+
+				if ((_y > (_yJumpStart - 100.0f)) && !jumpLimit) {
+					_y -= time * 0.7;
+					jump = true;
+					
+					onGround = false;
+					_log->add(L"onGround = false;");
+				} else {
+					jump = false;
+					jumpLimit = true;
+				}
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				animTitle = L"hit";
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -163,18 +182,8 @@ namespace ginger {
 					animTitle = L"idle";
 			}
 
-			if (jump) {
-				if (_y < (_yJumpStart - 100.0f)) {
-					_y -= time * 0.3;
-				}
-				else {
-					onGround = false;
-					jump = false;
-				}
-			}
-			
 			if (!onGround){
-				_y += time * 0.1;
+				_y += time * 0.2;
 				animTitle = L"jump";
 			}
 		/* --- */
