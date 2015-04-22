@@ -3,7 +3,12 @@
 namespace ginger {
 	int Game::start()
 	{
-		_window = new sf::RenderWindow(sf::VideoMode(640, 480), _gameTitle);
+		_window = new sf::RenderWindow(sf::VideoMode(800, 600), _gameTitle);
+		_view = new sf::View(sf::Vector2f(400, 300), sf::Vector2f(800, 600));
+		_view->move(0, 100);
+
+		_window->setView(*_view);
+		
 		prepareMenu();
 
 		_log.add(L"настроились");
@@ -13,6 +18,7 @@ namespace ginger {
 	void Game::stop()
 	{
 		delete _window;
+		delete _view;
 
 		_log.add(L"выгрузились");
 	}
@@ -23,6 +29,9 @@ namespace ginger {
 		float time = 0.0f;
 		bool pause = true;
 		float lastStateChangeAt = 0.0f;
+
+		ginger::Map map(&_log);
+		map.loadFromFile("../assets/levels/test.tmx");
 
 		_log.add(L"запускаем цикл");
 		
@@ -66,6 +75,7 @@ namespace ginger {
 			_window->clear();
 
 			if (!pause) {
+				_window->draw(map);
 				for (std::vector<ginger::SceneObject>::iterator it = objects.begin(); it != objects.end(); ++it) {
 					_window->draw(*it);
 				}

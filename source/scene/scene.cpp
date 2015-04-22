@@ -120,7 +120,7 @@ namespace ginger {
 				onGround = true;
 				jumpLimit = false;
 				collisionTestBottom = true;
-				_log->add(L"onGround = true;");
+				//_log->add(L"onGround = true;");
 			}
 		}
 		/* --- */

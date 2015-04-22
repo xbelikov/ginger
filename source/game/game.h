@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "../logger/logger.h"
 #include "../scene/scene.h"
+#include "../map/map.h"
 
 namespace ginger {
 
@@ -30,6 +31,7 @@ namespace ginger {
 		const wchar_t*							_gameTitle = L"Тест";
 
 		sf::RenderWindow*						_window = 0;
+		sf::View*								_view = 0;
 
 		ginger::Logger							_log;
 		const char*								_defaultFontPath = "../assets/fonts/PTS55F.ttf";

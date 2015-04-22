@@ -83,6 +83,8 @@
     <ClCompile Include="..\source\game\game.cpp" />
     <ClCompile Include="..\source\logger\logger.cpp" />
     <ClCompile Include="..\source\main\main.cpp" />
+    <ClCompile Include="..\source\map\map.cpp" />
+    <ClCompile Include="..\source\map\layers.cpp" />
     <ClCompile Include="..\source\scene\scene.cpp" />
     <ClCompile Include="..\source\utils\utils.cpp" />
   </ItemGroup>
@@ -92,6 +94,8 @@
     <ClInclude Include="..\source\game\game.h" />
     <ClInclude Include="..\source\logger\logger.h" />
     <ClInclude Include="..\source\main\main.h" />
+    <ClInclude Include="..\source\map\map.h" />
+    <ClInclude Include="..\source\map\layers.h" />
     <ClInclude Include="..\source\scene\scene.h" />
     <ClInclude Include="..\source\utils\utils.h" />
   </ItemGroup>
