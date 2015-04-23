@@ -10,7 +10,7 @@ namespace ginger {
 		
 		mapData.LoadFile();
 
-		_log->add(L"Загрузка карты:|-->");
+		_log->add("Загрузка карты:|-->");
 		_log->add(filePath);
 
 		TiXmlElement	*map = 0,
@@ -21,7 +21,8 @@ namespace ginger {
 						*imagelayer = 0,
 						*imagelayerImage = 0,
 						*tileLayer = 0,
-						*objectGroup = 0;
+						*objectGroup = 0,
+						*objectItem = 0;
 
 		ginger::MapTileset* mapTileset = 0;
 		ginger::MapImage* mapImage = 0;
@@ -57,7 +58,7 @@ namespace ginger {
 			mapTileset = new ginger::MapTileset;
 		}
 		catch (std::bad_alloc &ab) {
-			_log->add(L"Ошибка: не удалось выделить память для блока mapTileset");
+			_log->add("Ошибка: не удалось выделить память для блока mapTileset");
 			return;
 		}
 
@@ -130,15 +131,13 @@ namespace ginger {
 			mapImage = new ginger::MapImage;
 		}
 		catch (std::bad_alloc &ab) {
-			_log->add(L"Ошибка: не удалось выделить память для блока mapImage");
+			_log->add("Ошибка: не удалось выделить память для блока mapImage");
 			return;
 		}
 
 		mapImage->name = imagelayerName;
 		
 		sf::Vector2<int> imagelayerSize;
-		//imagelayerSize.x = mapImage->texture.getSize().x;
-		//imagelayerSize.y = mapImage->texture.getSize().y;
 
 		_layers.images[imagelayerName] = *mapImage;
 		_layers.images[imagelayerName].texture.loadFromFile(std::string("../assets/images/") + std::string(imagelayerFile));
@@ -152,9 +151,92 @@ namespace ginger {
 
 
 
+		//добавляем объекты
+		objectGroup = map->FirstChildElement("objectgroup");
+		std::string objectgroupName = objectGroup->Attribute("name");
 
+		objectItem = objectGroup->FirstChildElement("object");
 
+		while (objectItem) {
+			int  		objectId = atoi(objectItem->Attribute("id"));
+			sf::IntRect	objectPosSize(
+				atoi(objectItem->Attribute("x")),
+				atoi(objectItem->Attribute("y")),
+				atoi(objectItem->Attribute("width")),
+				atoi(objectItem->Attribute("height"))
+			);
+			std::string objectName = objectItem->Attribute("name");
+			std::string objectType = "";
 
-		_log->add(L"<--загрузили|");
+			if(objectItem->Attribute("type")) {
+				objectType = objectItem->Attribute("type");
+			}
+
+			//создадим и заполним структуру для mapObject
+			try {
+				mapObject = new ginger::MapObject;
+			}
+			catch (std::bad_alloc &ab) {
+				_log->add("Ошибка: не удалось выделить память для блока mapObject");
+				return;
+			}
+
+			mapObject->name = objectName;
+			mapObject->type = objectType;
+			mapObject->rect = objectPosSize;
+			mapObject->boundingBox.left = objectPosSize.left;
+			mapObject->boundingBox.top = objectPosSize.top;
+			mapObject->boundingBox.width = objectPosSize.width;
+			mapObject->boundingBox.height = objectPosSize.height;
+
+			int index = _layers.staticObjects.size();
+			_layers.staticObjects.push_back(*mapObject);
+			
+			if(objectName == "start") {
+				_levelObjects[LEVEL_OBJECTS::LEVEL_START] = &_layers.staticObjects[index]; 
+			} else if(objectName == "exit") {
+				_levelObjects[LEVEL_OBJECTS::LEVEL_END] = &_layers.staticObjects[index];
+			} else if(objectType.size()) {
+				if(_layers.staticObjectsByTypes.find(objectType) != _layers.staticObjectsByTypes.end()) {
+					_layers.staticObjectsByTypes[objectType].push_back(index);
+				} else {
+					std::vector<int> tempV;
+					tempV.push_back(index);
+					_layers.staticObjectsByTypes[objectType] = tempV;
+				}
+			}
+
+			delete mapObject;
+			objectItem = objectItem->NextSiblingElement();
+		}
+		//--------------------------------------------------------------------------------------------	
+
+		_log->add("<--загрузили|");
 	}
+
+	std::vector<ginger::MapObject*>* Map::getStaticObjectsForCollisionTest() {
+		if(!_objectsForCollisionTest.size()) {
+			if(_layers.staticObjectsByTypes.find("ground") != _layers.staticObjectsByTypes.end()) {
+				std::vector<int> temp = _layers.staticObjectsByTypes["ground"];
+				for(std::vector<int>::iterator it = temp.begin(); it < temp.end(); ++it) {
+					_objectsForCollisionTest.push_back(&_layers.staticObjects[*it]);
+				}
+			}
+
+			if(_layers.staticObjectsByTypes.find("platform") != _layers.staticObjectsByTypes.end()) {
+				std::vector<int> temp = _layers.staticObjectsByTypes["platform"];
+				for(std::vector<int>::iterator it = temp.begin(); it < temp.end(); ++it) {
+					_objectsForCollisionTest.push_back(&_layers.staticObjects[*it]);
+				}
+			}
+		}
+
+		return &_objectsForCollisionTest;
+	}
+
+
+	ginger::MapObject* Map::getLevelObject(LEVEL_OBJECTS o) {
+		return _levelObjects[o];
+	}
+
 }

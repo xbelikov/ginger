@@ -1,7 +1,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
+ 
 #ifndef GINGER_LAYERS
 #define GINGER_LAYERS
 
@@ -32,27 +32,24 @@ namespace ginger {
 		std::vector<sf::Sprite> set;
 	private:
 		virtual void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
-			//for (std::vector<int>::const_iterator it = tiles.begin(); it < tiles.end(); ++it) {
+			std::vector<int>::const_iterator it = tiles.begin();
+			sf::Sprite temp = set[*it];
 			
-				std::vector<int>::const_iterator it = tiles.begin();
-				sf::Sprite temp = set[*it];
-				
-				for (int i = 0; i < mapheight; i++) {
-					for (int j = 0; j < mapwidth; j++) {
-						if (!*it) {
-							++it;
-							continue;
-						}
-
-						sf::Sprite temp = set[*it-1];
-						
-						temp.setPosition(tileWidth * j, tileHeight * i);
-						rt.draw(temp);
-						
+			for (int i = 0; i < mapheight; i++) {
+				for (int j = 0; j < mapwidth; j++) {
+					if (!*it) {
 						++it;
+						continue;
 					}
+
+					sf::Sprite temp = set[*it-1];
+					
+					temp.setPosition((float) tileWidth * j, (float) tileHeight * i);
+					rt.draw(temp);
+					
+					++it;
 				}
-			//}
+			}
 		}
 	};
 
@@ -73,7 +70,28 @@ namespace ginger {
 		sf::IntRect			rect;
 		sf::FloatRect		boundingBox;
 		sf::Color			color = sf::Color::Red;
+		bool				collision = true;
 		//sf::RectangleShape	rectShape;
+
+		bool collDetect(sf::FloatRect &objectBox) {
+			if (!collision) return false;
+
+			if (boundingBox.intersects(objectBox)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		bool collDetect(sf::Vector2f &objectPoint) {
+			if (!collision) return false;
+
+			if (boundingBox.contains(objectPoint)) {
+				return true;
+			}
+
+			return false;
+		}
 
 	private:
 		virtual void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
@@ -95,7 +113,8 @@ namespace ginger {
 		std::vector<ginger::MapObject>				staticObjects;
 		std::map<std::string, std::vector<int>>		staticObjectsByTypes;
 		
-		bool										enableDrawObjects;
+													/* -- ENABLE DRAW OBJECTS -- */
+		bool										enableDrawObjects = false;
 
 		int											globalOffsetX = 0;
 		int											globalOffsetY = 0;
@@ -103,7 +122,7 @@ namespace ginger {
 		void										update();
 	private:
 		virtual void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
-			//рисуем слой изображений
+			//рисуем слой изображений  
 			for (MapImageIterator it = images.begin(); it != images.end(); ++it) {
 				rt.draw(it->second);
 			}

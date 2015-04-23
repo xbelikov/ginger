@@ -2,7 +2,7 @@
 #include "../logger/logger.h"
 #include "../scene/scene.h"
 #include "../map/map.h"
-
+ 
 namespace ginger {
 
 	class Game
@@ -32,6 +32,9 @@ namespace ginger {
 
 		sf::RenderWindow*						_window = 0;
 		sf::View*								_view = 0;
+
+		int										_gWidth = 1024;
+		int										_gHeight = 700;
 
 		ginger::Logger							_log;
 		const char*								_defaultFontPath = "../assets/fonts/PTS55F.ttf";

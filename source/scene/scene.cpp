@@ -1,6 +1,6 @@
 #include "scene.h"
 #include "../utils/utils.h"
-
+ 
 namespace ginger {
 	void Scene::add()
 	{
@@ -52,9 +52,9 @@ namespace ginger {
 			std::vector<sf::IntRect>	frames;
 			TiXmlElement*				cut;
 
-			_log->add(L"Загружаем анимацию:");
+			_log->add("Загружаем анимацию:");
 			_log->add(animTitle.c_str());
-			_log->add(L"---");
+			_log->add("---");
 
 			cut = animEl->FirstChildElement("cut");
 
@@ -79,14 +79,36 @@ namespace ginger {
 			animEl = animEl->NextSiblingElement("animation");
 		}
 	}
-
+/*
 	void Player::update(float time, std::vector<ginger::SceneObject>& objects)
 	{
 		std::wstring animTitle = L"idle";
-		bool collisionTestLeft = false;
-		bool collisionTestRight = false;
-		bool collisionTestTop = false;
-		bool collisionTestBottom = false;
+		checkCollisions(objects);
+
+		// --- keycheck --- /
+		keyCheck(time, animTitle);
+		// --- /
+
+		updateAnimation(time, animTitle);
+	}
+*/
+	void Player::update(float time, std::vector<ginger::MapObject*>* objects)
+	{
+		std::wstring animTitle = L"idle";
+		checkCollisions(objects);
+
+		/* --- keycheck --- */
+		keyCheck(time, animTitle);
+		/* --- */
+
+		updateAnimation(time, animTitle);
+	}
+
+	void Player::checkCollisions(std::vector<ginger::SceneObject>& objects) {
+		collisionTestLeft = false;
+		collisionTestRight = false;
+		collisionTestTop = false;
+		collisionTestBottom = false;
 		
 		if (!boundingBox.height && !boundingBox.width) {
 			sf::Sprite* s = _anim.getCurrentFrame();
@@ -103,24 +125,24 @@ namespace ginger {
 
 			if (!collisionTestLeft && it->collDetect(l)) {
 				collisionTestLeft = true;
-				_log->add(L"collisionTestLeft = true;");
+				_log->add("collisionTestLeft = true;");
 			}
 
 			if (!collisionTestRight && it->collDetect(r)) {
 				collisionTestRight = true;
-				_log->add(L"collisionTestRight = true;");
+				_log->add("collisionTestRight = true;");
 			}
 
 			if (!collisionTestTop && it->collDetect(t)) {
 				collisionTestTop = true;
-				_log->add(L"collisionTestTop = true;");
+				_log->add("collisionTestTop = true;");
 			}
 
 			if (!collisionTestBottom && it->collDetect(b)) {
 				onGround = true;
 				jumpLimit = false;
 				collisionTestBottom = true;
-				//_log->add(L"onGround = true;");
+				//_log->add("onGround = true;");
 			}
 		}
 		/* --- */
@@ -128,68 +150,116 @@ namespace ginger {
 		if (!collisionTestBottom) {
 			onGround = false;
 		}
+	}
 
+	void Player::checkCollisions(std::vector<ginger::MapObject*>* objects) {
+		collisionTestLeft = false;
+		collisionTestRight = false;
+		collisionTestTop = false;
+		collisionTestBottom = false;
+		
+		if (!boundingBox.height && !boundingBox.width) {
+			sf::Sprite* s = _anim.getCurrentFrame();
+			boundingBox = s->getTextureRect();
+		}
+		
+		/* --- collision test --- */
+		for (std::vector<ginger::MapObject*>::iterator it = objects->begin(); it != objects->end(); ++it) {
+			sf::Vector2f	l((float) _x, (float) _y), 
+							r((float) (_x + boundingBox.width), (float) (_y + boundingBox.height / 2)),
+							t((float) (_x + boundingBox.width /2), (float) _y), 
+							b((float) (_x + boundingBox.width / 2), (float) _y + boundingBox.height);
 
-		/* --- keycheck --- */
+			ginger::MapObject* o = *it;
+			
+			if (!collisionTestLeft && o->collDetect(l)) {
+				collisionTestLeft = true;
+				_log->add("collisionTestLeft = true;");
+			}
+
+			if (!collisionTestRight && o->collDetect(r)) {
+				collisionTestRight = true;
+				_log->add("collisionTestRight = true;");
+			}
+
+			if (!collisionTestTop && o->collDetect(t)) {
+				collisionTestTop = true;
+				_log->add("collisionTestTop = true;");
+			}
+
+			if (!collisionTestBottom && o->collDetect(b)) {
+				onGround = true;
+				jumpLimit = false;
+				collisionTestBottom = true;
+				//_log->add("onGround = true;");
+			}
+		}
+		/* --- */
+
+		if (!collisionTestBottom) {
+			onGround = false;
+		}
+	}
+
+	void Player::keyCheck(float time, std::wstring& animTitle) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			if (!collisionTestLeft) {
-				_x -= time * 0.2;
+				_x -= time * 0.2f;
 			}
 
 			_flip = true;
 		} 
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			if (!collisionTestRight) {
-				_x += time * 0.2;
+				_x += time * 0.2f;
 			}
 
 			_flip = false;
 		}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			
+			animTitle = L"jump";
+			
+			if (!jump && onGround) {
+				_yJumpStart = _y; 
+			}
+
+			if ((_y > (_yJumpStart - 100.0f)) && !jumpLimit) {
+				_y -= time * 0.7f;
+				jump = true;
 				
-				animTitle = L"jump";
-				
-				if (!jump && onGround) {
-					_yJumpStart = _y; 
-				}
+				onGround = false;
+				_log->add("onGround = false;");
+			} else {
+				jump = false;
+				jumpLimit = true;
+			}
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			animTitle = L"hit";
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			if (onGround) {
+				animTitle = L"run";
+			}
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			if (onGround) {
+				animTitle = L"run";
+			}
+		}
+		else if (onGround) {
+				animTitle = L"idle";
+		}
 
-				if ((_y > (_yJumpStart - 100.0f)) && !jumpLimit) {
-					_y -= time * 0.7;
-					jump = true;
-					
-					onGround = false;
-					_log->add(L"onGround = false;");
-				} else {
-					jump = false;
-					jumpLimit = true;
-				}
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-				animTitle = L"hit";
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				if (onGround) {
-					animTitle = L"run";
-				}
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				if (onGround) {
-					animTitle = L"run";
-				}
-			}
-			else if (onGround) {
-					animTitle = L"idle";
-			}
+		if (!onGround){
+			_y += time * 0.2f;
+			animTitle = L"jump";
+		}
+	}
 
-			if (!onGround){
-				_y += time * 0.2;
-				animTitle = L"jump";
-			}
-		/* --- */
-
-
-
+	void Player::updateAnimation(float time, std::wstring& animTitle) {
 		_anim.set(animTitle.c_str(), _x, _y);
 		_anim.flip(_flip);
 		_anim.tick(time);

@@ -14,60 +14,58 @@ namespace ginger {
 		_addEndMsg();
 		_saveAndClose();
 	}
-	
+	/*
 	void Logger::add(std::wstring& msg)
 	{
-		wchar_t curTime[24];
+		char curTime[24];
 		getCurrentDateTime(curTime, 22);
 		
 		#ifdef GINGER_DEBUG
-		std::wcout << L"[" + std::wstring(curTime) + L"] " + msg << std::endl;
+		std::cout << "[" + std::string(curTime) + "] " + _msg << std::endl;
 		#endif
 
-		_buffer += L"[";
+		_buffer += "[";
 		_buffer += curTime;
-		_buffer += L"] ";
-		_buffer += msg;
-		_buffer += L"\n";
+		_buffer += "] ";
+		_buffer += _msg;
+		_buffer += "\n";
 	}
-
 	void Logger::add(const wchar_t* msg)
 	{
-		wchar_t curTime[24];
+		char curTime[24];
 		getCurrentDateTime(curTime, 22);
 
 		#ifdef GINGER_DEBUG
-		std::wcout << L"[" + std::wstring(curTime) + L"] " + std::wstring(msg) << std::endl;
+		std::cout << "[" + std::string(curTime) + "] " + std::string(_msg) << std::endl;
 		#endif
 
-		_buffer += L"[";
+		_buffer += "[";
 		_buffer += curTime;
-		_buffer += L"] ";
-		_buffer += msg;
-		_buffer += L"\n";
+		_buffer += "] ";
+		_buffer += _msg;
+		_buffer += "\n";
 	}
-
+	*/
 	void Logger::add(const char* _msg)
 	{
 		std::string smsg = _msg;
 		std::wstring msg;
 		ginger::string_to_wstring(smsg, msg);
 
-		wchar_t curTime[24];
+		char curTime[24];
 		getCurrentDateTime(curTime, 22);
 
 		#ifdef GINGER_DEBUG
-		std::wcout << L"[" + std::wstring(curTime) + L"] " + std::wstring(msg) << std::endl;
+		std::cout << "\n[" + std::string(curTime) + "] " + std::string(_msg) << std::endl;
 		#endif
 
-		_buffer += L"[";
+		_buffer += "[";
 		_buffer += curTime;
-		_buffer += L"] ";
-		_buffer += msg;
-		_buffer += L"\n";
+		_buffer += "] ";
+		_buffer += _msg;
 	}
 
-	void Logger::getCurrentDateTime(wchar_t* tb, int size)
+	void Logger::getCurrentDateTime(char* tb, int size)
 	{
 		time_t  timec;
 		time(&timec);
@@ -75,7 +73,7 @@ namespace ginger {
 		tm timeinfo;
 		localtime_s(&timeinfo, &timec);
 	
-		wcsftime(tb, size, L"%d.%m.%Y %H:%M:%S", &timeinfo);
+		strftime(tb, size, "%d.%m.%Y %H:%M:%S", &timeinfo);
 	}
 
 	void Logger::_saveAndClose()
@@ -87,7 +85,7 @@ namespace ginger {
 	}
 
 	int Logger::_open()
-	{
+	{ 
 		_target.imbue(std::locale("rus"));
 		_target.open(_logFileName);
 
@@ -100,11 +98,11 @@ namespace ginger {
 
 	void Logger::_addStartMsg()
 	{
-		add(L"стартуем");
+		add(ginger::LOGGER_START);
 	}
 
 	void Logger::_addEndMsg()
 	{
-		add(L"завершаем");
+		add(ginger::LOGGER_STOP);
 	}
-}
+} 

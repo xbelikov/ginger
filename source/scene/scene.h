@@ -6,6 +6,7 @@
 
 #include "../animation/animation_list.h"
 #include "../logger/logger.h"
+#include "../map/map.h"
 
 namespace ginger {
 	class SceneObject : public sf::Drawable, public sf::Transformable
@@ -49,7 +50,12 @@ namespace ginger {
 	public:
 		Player(ginger::Logger* log);
 
-		void	update(float time, std::vector<ginger::SceneObject>& objects);
+		//void	update(float time, std::vector<ginger::SceneObject>& objects);
+		void 	update(float time, std::vector<ginger::MapObject*>* objects);
+		void 	checkCollisions(std::vector<ginger::SceneObject>& objects);
+		void	checkCollisions(std::vector<ginger::MapObject*>* objects);
+		void	updateAnimation(float time, std::wstring& animTitle);
+		void	keyCheck(float time, std::wstring& animTitle);
 
 		bool	onGround = true;
 		int		health = 100;
@@ -57,6 +63,12 @@ namespace ginger {
 		bool	jumpLimit = false;
 
 		sf::IntRect boundingBox;
+
+		bool collisionTestLeft = false;
+		bool collisionTestRight = false;
+		bool collisionTestTop = false;
+		bool collisionTestBottom = false;
+
 	private:
 		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const {
 			sf::Sprite* sprite = _anim.getCurrentFrame();
