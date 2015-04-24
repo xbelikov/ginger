@@ -122,17 +122,17 @@ namespace ginger {
 		void										update();
 	private:
 		virtual void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
-			//рисуем слой изображений  
+			//Draw background layer
 			for (MapImageIterator it = images.begin(); it != images.end(); ++it) {
 				rt.draw(it->second);
 			}
 
-			//Рисуем тайлы
+			//РDraw tiles
 			for (MapTilesetIterator it = tiles.begin(); it != tiles.end(); ++it) {
 				rt.draw(it->second);
 			}
 
-			//Рисуем объекты (если надо)
+			//Draw objects
 			if (enableDrawObjects) {
 				for (MapObjectIterator it = staticObjects.begin(); it != staticObjects.end(); ++it) {
 					rt.draw(*it);
