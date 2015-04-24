@@ -88,17 +88,27 @@ namespace ginger {
 		bool					_flip = false;
 	};
 
-
 	class Scene
 	{
 	public:
-		void add();
-		int loadFromFile();
-	
-		std::vector<sf::IntRect> object;
+		Scene(ginger::Logger* log);
+		~Scene();
+		int prepareMap(const char* filePath, const char* mapName);
+		void setRenderWindow(sf::RenderWindow* w);
+		void update(float time);
+		void draw();
+
+		ginger::Player*						player;
+		std::map<std::string, ginger::Map>	maps;
+		std::wstring						name;
+
+		std::string							currentMap;
+		ginger::MapObject					curStartPos;
+		ginger::MapObject					curEndPos;
+
+		std::vector<ginger::MapObject*>*	mapObjectsForCollisionTest = 0;
 	private:
-		std::wstring _name;
-		//std::map<std::wstring, ginger::SceneObject> _sceneObjects;
-		//std::map<std::wstring, std::vector<ginger::SceneObject&>> _layers;
+		ginger::Logger*						_log = 0;
+		sf::RenderWindow*					_window = 0;
 	};
 }

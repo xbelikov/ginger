@@ -29,34 +29,15 @@ namespace ginger {
 		float time = 0.0f;
 		bool pause = true;
 		float lastStateChangeAt = 0.0f;
-		std::vector<ginger::MapObject*>* objects = 0;
-		ginger::MapObject* startPos = 0;
-		ginger::MapObject* endPos = 0;
 
-		ginger::Map map(&_log);
-		
-		map.loadFromFile("../assets/levels/test.tmx");
-		objects = map.getStaticObjectsForCollisionTest();
-		startPos = map.getLevelObject(LEVEL_OBJECTS::LEVEL_START);
-		endPos = map.getLevelObject(LEVEL_OBJECTS::LEVEL_END);
-		
-		ginger::Player player(&_log);
-
-		/* --- доавим тестовую землю --- 
-		std::vector<ginger::SceneObject> objects;
-		ginger::SceneObject ground;
-		ground.boundingBox = sf::FloatRect(5.0f, 300.0f, 100.0f, 10.0f);
-		ground.collision = true;
-		objects.push_back(ground);
-
-		ground.boundingBox = sf::FloatRect(5.0f, 400.0f, 600.0f, 10.0f);
-		objects.push_back(ground);
-		/* --- */
+		ginger::Scene scene(&_log);
+		scene.setRenderWindow(_window);
+		scene.prepareMap("../assets/levels/test.tmx", "test");
 
 		_window->setVerticalSyncEnabled(true);
 		
-
 		_log.add(ginger::GAME_CYCLE_START);
+
 		while (_window->isOpen())
 		{
 			sf::Event event;
@@ -81,16 +62,11 @@ namespace ginger {
 
 			_window->clear();
 
+			/* Pause Menu or Update and render Scene */
 			if (!pause) {
 				_window->setView(*_view);
-				_window->draw(map);
-				/*
-				for (std::vector<ginger::SceneObject>::iterator it = objects.begin(); it != objects.end(); ++it) {
-					_window->draw(*it);
-				}
-				*/
-				player.update(time, objects);
-				_window->draw(player);
+				scene.update(time);
+				scene.draw();
 			}
 			else {
 				drawMenu();

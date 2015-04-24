@@ -70,7 +70,7 @@ namespace ginger {
 		sf::IntRect			rect;
 		sf::FloatRect		boundingBox;
 		sf::Color			color = sf::Color::Red;
-		bool				collision = true;
+		bool				collision = false;
 		//sf::RectangleShape	rectShape;
 
 		bool collDetect(sf::FloatRect &objectBox) {

@@ -19,6 +19,9 @@ namespace ginger {
 	static const char* GAME_CYCLE_STOP = "Cycle Stop";
 	static const char* LOADING_FONT_START = "Loading font:";
 	static const char* LOADING_FONT_STOP = "Font loaded";
+	static const char* LOADING_MAP_TILES_OK = "> Loading map tiles OK";
+	static const char* LOADING_MAP_IMAGES_OK = "> Loading map images OK";
+	static const char* LOADING_MAP_OBJECTS_OK = "> Loading map objects OK";
 
 	class Logger
 	{

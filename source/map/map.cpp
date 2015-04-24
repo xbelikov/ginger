@@ -13,39 +13,55 @@ namespace ginger {
 		_log->add("Загрузка карты:|-->");
 		_log->add(filePath);
 
-		TiXmlElement	*map = 0,
-						*tileset = 0,
-						*tileData = 0,
-						*tileItem = 0,
-						*tilesetImage = 0,
-						*imagelayer = 0,
-						*imagelayerImage = 0,
-						*tileLayer = 0,
-						*objectGroup = 0,
-						*objectItem = 0;
+		TiXmlElement *map = mapData.FirstChildElement("map");
 
-		ginger::MapTileset* mapTileset = 0;
-		ginger::MapImage* mapImage = 0;
-		ginger::MapObject* mapObject = 0;
+		_findMapData(map);
+		
+		//тайлы
+		if (_findTilesetData(map)) {
+			_log->add(ginger::LOADING_MAP_TILES_OK);
+		}
+		//--------------------------------
 
-		map = mapData.FirstChildElement("map");
+		//фон
+		if (_findImageLayerData(map)) {
+			_log->add(ginger::LOADING_MAP_IMAGES_OK);
+		}
+		//--------------------------------
+
+		//объекты
+		if (_findObjectGroupData(map)) {
+			_log->add(ginger::LOADING_MAP_OBJECTS_OK);
+		}
+		//--------------------------------
+
+		_log->add("<--загрузили|");
+	}
+
+	int Map::_findMapData(TiXmlElement* map) {
 
 		//атрибуты map
-		int mapWidth = atoi(map->Attribute("width"));
-		int mapHeight = atoi(map->Attribute("height"));
-		int tilewidth = atoi(map->Attribute("tilewidth"));
-		int tileheight = atoi(map->Attribute("tileheight"));
-		
+		mapWidth = atoi(map->Attribute("width"));
+		mapHeight = atoi(map->Attribute("height"));
+		tilewidth = atoi(map->Attribute("tilewidth"));
+		tileheight = atoi(map->Attribute("tileheight"));
 
-		tileset = map->FirstChildElement("tileset");
+		return 1;
+	}
+
+	int	Map::_findTilesetData(TiXmlElement* map) {
+		ginger::MapTileset* mapTileset = 0;
+		TiXmlElement* tileset = map->FirstChildElement("tileset");
+		TiXmlElement* tilesetImage = tileset->FirstChildElement("image");
+		TiXmlElement* tileLayer = map->FirstChildElement("layer");
+		TiXmlElement* tileData = tileLayer->FirstChildElement("data");
+		TiXmlElement* tileItem = tileData->FirstChildElement("tile");
 
 		//атрибуты tileset
 		std::string tilesetName = tileset->Attribute("name");
 		int tilesetFirstGid = atoi(tileset->Attribute("firstgid"));
 		int tilesetMargin = atoi(tileset->Attribute("margin"));
 		int tilesetSpacing = atoi(tileset->Attribute("spacing"));
-
-		tilesetImage = tileset->FirstChildElement("image");
 
 		//картинка для tileset
 		std::string tilesetImageFile = tilesetImage->Attribute("source");
@@ -59,7 +75,7 @@ namespace ginger {
 		}
 		catch (std::bad_alloc &ab) {
 			_log->add("Ошибка: не удалось выделить память для блока mapTileset");
-			return;
+			return 0;
 		}
 
 		mapTileset->name = tilesetName;
@@ -76,9 +92,9 @@ namespace ginger {
 		int x = tilesetSpacing;
 		int y = tilesetMargin;
 
-		for (int i = 0; i < tilesNum; i++) {	
+		for (int i = 0; i < tilesNum; i++) {
 			mapTileset->set.push_back(sf::Sprite(mapTileset->texture, sf::IntRect(x, y, tilewidth, tileheight)));
-			
+
 			if ((x + tilewidth + tilesetSpacing) < tilesetImageWidth) {
 				x += tilewidth + tilesetSpacing;
 			}
@@ -88,10 +104,7 @@ namespace ginger {
 			}
 		}
 
-		tileLayer = map->FirstChildElement("layer");
-		tileData = tileLayer->FirstChildElement("data");
-		tileItem = tileData->FirstChildElement("tile");
-
+		//разберем tileItem
 		while (tileItem) {
 			mapTileset->tiles.push_back(atoi(tileItem->Attribute("gid")));
 			tileItem = tileItem->NextSiblingElement("tile");
@@ -111,32 +124,31 @@ namespace ginger {
 		}
 
 		delete mapTileset;
-		//--------------------------------------------------------------------------------------------
 
+		return 1;
+	}
 
-
-
-		
-
-		imagelayer = map->FirstChildElement("imagelayer");
-		imagelayerImage = imagelayer->FirstChildElement("image");
+	int	Map::_findImageLayerData(TiXmlElement* map) {
+		ginger::MapImage* mapImage = 0;
+		TiXmlElement* imagelayer = map->FirstChildElement("imagelayer");
+		TiXmlElement* imagelayerImage = imagelayer->FirstChildElement("image");
 
 		std::string imagelayerName = imagelayer->Attribute("name");
 		int imagelayerOffsetX = atoi(imagelayer->Attribute("x"));
 		int imagelayerOffsetY = atoi(imagelayer->Attribute("y"));
 		std::string imagelayerFile = imagelayerImage->Attribute("source");
 
-		//создадим и заполним структуру для tileset
+		//создадим и заполним структуру для image
 		try {
 			mapImage = new ginger::MapImage;
 		}
 		catch (std::bad_alloc &ab) {
 			_log->add("Ошибка: не удалось выделить память для блока mapImage");
-			return;
+			return 0;
 		}
 
 		mapImage->name = imagelayerName;
-		
+
 		sf::Vector2<int> imagelayerSize;
 
 		_layers.images[imagelayerName] = *mapImage;
@@ -147,28 +159,32 @@ namespace ginger {
 		_layers.images[imagelayerName].sprite.setTextureRect(sf::IntRect(sf::Vector2<int>(-imagelayerOffsetX, -imagelayerOffsetY), imagelayerSize));
 
 		delete mapImage;
-		//--------------------------------------------------------------------------------------------
 
+		return 1;
+	}
+	
+	int	Map::_findObjectGroupData(TiXmlElement* map) {
+		ginger::MapObject* mapObject = 0;
+		TiXmlElement* objectGroup = map->FirstChildElement("objectgroup");
+		TiXmlElement* objectItem = objectGroup->FirstChildElement("object");
 
-
-		//добавляем объекты
-		objectGroup = map->FirstChildElement("objectgroup");
 		std::string objectgroupName = objectGroup->Attribute("name");
-
-		objectItem = objectGroup->FirstChildElement("object");
-
+		
 		while (objectItem) {
+			int index = _layers.staticObjects.size();
+
 			int  		objectId = atoi(objectItem->Attribute("id"));
 			sf::IntRect	objectPosSize(
 				atoi(objectItem->Attribute("x")),
 				atoi(objectItem->Attribute("y")),
 				atoi(objectItem->Attribute("width")),
 				atoi(objectItem->Attribute("height"))
-			);
+				);
 			std::string objectName = objectItem->Attribute("name");
 			std::string objectType = "";
+			int			objectCollision = atoi(objectItem->Attribute("collision"));
 
-			if(objectItem->Attribute("type")) {
+			if (objectItem->Attribute("type")) {
 				objectType = objectItem->Attribute("type");
 			}
 
@@ -178,7 +194,7 @@ namespace ginger {
 			}
 			catch (std::bad_alloc &ab) {
 				_log->add("Ошибка: не удалось выделить память для блока mapObject");
-				return;
+				return 0;
 			}
 
 			mapObject->name = objectName;
@@ -189,17 +205,18 @@ namespace ginger {
 			mapObject->boundingBox.width = objectPosSize.width;
 			mapObject->boundingBox.height = objectPosSize.height;
 
-			int index = _layers.staticObjects.size();
+			if (objectCollision) {
+				mapObject->collision = true;
+				_layers.staticObjectsByTypes[GINGER_MAP_TYPE_COLLISION].push_back(index);
+			}
+
 			_layers.staticObjects.push_back(*mapObject);
-			
-			if(objectName == "start") {
-				_levelObjects[LEVEL_OBJECTS::LEVEL_START] = &_layers.staticObjects[index]; 
-			} else if(objectName == "exit") {
-				_levelObjects[LEVEL_OBJECTS::LEVEL_END] = &_layers.staticObjects[index];
-			} else if(objectType.size()) {
-				if(_layers.staticObjectsByTypes.find(objectType) != _layers.staticObjectsByTypes.end()) {
+
+			if (objectType.size()) {
+				if (_layers.staticObjectsByTypes.find(objectType) != _layers.staticObjectsByTypes.end()) {
 					_layers.staticObjectsByTypes[objectType].push_back(index);
-				} else {
+				}
+				else {
 					std::vector<int> tempV;
 					tempV.push_back(index);
 					_layers.staticObjectsByTypes[objectType] = tempV;
@@ -209,12 +226,12 @@ namespace ginger {
 			delete mapObject;
 			objectItem = objectItem->NextSiblingElement();
 		}
-		//--------------------------------------------------------------------------------------------	
 
-		_log->add("<--загрузили|");
+		return 1;
 	}
 
 	std::vector<ginger::MapObject*>* Map::getStaticObjectsForCollisionTest() {
+		/*
 		if(!_objectsForCollisionTest.size()) {
 			if(_layers.staticObjectsByTypes.find("ground") != _layers.staticObjectsByTypes.end()) {
 				std::vector<int> temp = _layers.staticObjectsByTypes["ground"];
@@ -230,13 +247,69 @@ namespace ginger {
 				}
 			}
 		}
+		*/
+
+		if (!_objectsForCollisionTest.size()) {
+			if (_layers.staticObjectsByTypes.find(GINGER_MAP_TYPE_COLLISION) != _layers.staticObjectsByTypes.end()) {
+				std::vector<int> temp = _layers.staticObjectsByTypes[GINGER_MAP_TYPE_COLLISION];
+				for (std::vector<int>::iterator it = temp.begin(); it < temp.end(); ++it) {
+					_objectsForCollisionTest.push_back(&_layers.staticObjects[*it]);
+				}
+			}
+		}
 
 		return &_objectsForCollisionTest;
 	}
 
+	/*
+	* Get object index by type
+	* write std::vector<int> indexes of objects into a second parameter
+	*/
+	void Map::getLevelObjectIndexes(LEVEL_OBJECTS o, std::vector<int>& objectIndexes) {
+		switch (o) {
+		case LEVEL_OBJECTS::LEVEL_START:
+			if (_layers.staticObjectsByTypes.find("start") != _layers.staticObjectsByTypes.end()) {
+				objectIndexes = _layers.staticObjectsByTypes["start"];
+			}
+			break;
 
-	ginger::MapObject* Map::getLevelObject(LEVEL_OBJECTS o) {
-		return _levelObjects[o];
+		case LEVEL_OBJECTS::LEVEL_END:
+			if (_layers.staticObjectsByTypes.find("start") != _layers.staticObjectsByTypes.end()) {
+				objectIndexes = _layers.staticObjectsByTypes["start"];
+			}
+			break;
+		}
 	}
 
+	/*
+	 * Get object index by type
+	 * return object index or -1
+	 */
+	int Map::getLevelObjectIndex(LEVEL_OBJECTS o) {
+		std::vector<int> objectIndexes;
+
+		switch (o) {
+		case LEVEL_OBJECTS::LEVEL_START:
+			if (_layers.staticObjectsByTypes.find("start") != _layers.staticObjectsByTypes.end()) {
+				objectIndexes = _layers.staticObjectsByTypes["start"];
+			}
+			break;
+
+		case LEVEL_OBJECTS::LEVEL_END:
+			if (_layers.staticObjectsByTypes.find("exit") != _layers.staticObjectsByTypes.end()) {
+				objectIndexes = _layers.staticObjectsByTypes["exit"];
+			}
+			break;
+		}
+
+		if (objectIndexes.size()) {
+			return objectIndexes[0];
+		}
+
+		return GINGER_MAP_OBJECT_NOT_FOUND;
+	}
+
+	void Map::getObject(int index, ginger::MapObject& target) {
+		target = _layers.staticObjects.at(index);
+	}
 }

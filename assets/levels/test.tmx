@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="24" height="24" tilewidth="32" tileheight="32" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="24" height="24" tilewidth="32" tileheight="32" nextobjectid="11">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32" spacing="1" margin="1">
   <image source="Jungle_03.png" trans="3b5421" width="232" height="265"/>
  </tileset>
@@ -587,13 +587,14 @@
   </data>
  </layer>
  <objectgroup name="o_1">
-  <object id="1" name="start" x="32" y="704" width="32" height="29"/>
-  <object id="2" name="exit" x="737" y="702" width="30" height="33"/>
-  <object id="3" name="g_1" type="ground" x="3" y="748" width="349" height="14"/>
-  <object id="4" name="g_2" type="ground" x="386" y="750" width="59" height="13"/>
-  <object id="6" name="g_3" type="ground" x="576" y="750" width="59" height="13"/>
-  <object id="7" name="g_4" type="ground" x="675" y="749" width="91" height="13"/>
-  <object id="8" name="p_1" type="platform" x="459" y="678" width="108" height="14"/>
-  <object id="9" name="p_2" type="platform" x="638" y="578" width="127" height="14"/>
+  <object id="1" collision="0" name="start" type="start" x="32" y="704" width="32" height="29"/>
+  <object id="2" collision="0" name="exit" type="exit" x="737" y="702" width="30" height="33"/>
+  <object id="3" collision="1" name="g_1" type="ground" x="3" y="748" width="349" height="14"/>
+  <object id="4" collision="1" name="g_2" type="ground" x="386" y="750" width="59" height="13"/>
+  <object id="6" collision="1" name="g_3" type="ground" x="576" y="750" width="59" height="13"/>
+  <object id="7" collision="1" name="g_4" type="ground" x="675" y="749" width="91" height="13"/>
+  <object id="8" collision="1" name="p_1" type="platform" x="459" y="678" width="108" height="14"/>
+  <object id="9" collision="1" name="p_2" type="platform" x="638" y="578" width="127" height="14"/>
+  <object id="10" collision="0" name="so_1" type="someobject" x="638" y="178" width="127" height="14"/>
  </objectgroup>
 </map>
