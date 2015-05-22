@@ -17,7 +17,8 @@ namespace ginger {
 			_list[animTitle].addFrame(it->left + it->width, it->top, -it->width, it->height, true);
 		}
 
-		set(animTitle, 0, 0);
+		set(animTitle);
+		set(0.0f, 0.0f);
 	}
 
 	void AnimationList::draw(sf::RenderWindow& window, int x, int y)
@@ -32,7 +33,7 @@ namespace ginger {
 		return s;
 	}
 
-	void AnimationList::set(const wchar_t* animTitle, float x, float y)
+	void AnimationList::set(const wchar_t* animTitle)
 	{
 		bool eqTitles = false;
 		bool hasAnim = (_curAnim != 0);
@@ -51,6 +52,11 @@ namespace ginger {
 			_curAnim = &_list[animTitle];
 			_curAnim->updateTextureRect();
 		}
+	}
+
+	void AnimationList::set(float x, float y)
+	{
+		bool hasAnim = (_curAnim != 0);
 
 		if (hasAnim) {
 			_curAnim->setPosition(x, y);

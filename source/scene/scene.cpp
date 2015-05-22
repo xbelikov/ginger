@@ -66,7 +66,7 @@ namespace ginger {
 		_log = log;
 		_loadSpriteData();
 
-		_anim.set(L"idle", 0, 0);
+		_anim.set(L"idle");
 	}
 
 	void Player::_loadSpriteData()
@@ -143,14 +143,22 @@ namespace ginger {
 */
 	void Player::update(float time, std::vector<ginger::MapObject*>* objects)
 	{
-		std::wstring animTitle = L"idle";
+		//std::wstring animTitle = L"idle";
 		checkCollisions(objects);
+		
+		if (!onGround) {
+			falling(time);
+		}
 
 		/* --- keycheck --- */
-		keyCheck(time, animTitle);
+		if (!keyCheck(time)) {
+			if (onGround) {
+				stay(time);
+			}
+		}
 		/* --- */
 
-		updateAnimation(time, animTitle);
+		updateAnimation(time);
 	}
 
 	void Player::checkCollisions(std::vector<ginger::SceneObject>& objects) {
@@ -165,11 +173,12 @@ namespace ginger {
 		}
 		
 		/* --- collision test --- */
+		sf::Vector2f currentPos = getPosition();
 		for (std::vector<ginger::SceneObject>::iterator it = objects.begin(); it != objects.end(); ++it) {
-			sf::Vector2f	l((float) _x, (float) _y), 
-							r((float) (_x + boundingBox.width), (float) (_y + boundingBox.height / 2)),
-							t((float) (_x + boundingBox.width /2), (float) _y), 
-							b((float) (_x + boundingBox.width / 2), (float) _y + boundingBox.height);
+			sf::Vector2f	l((float) currentPos.x, (float) currentPos.y),
+							r((float) (currentPos.x + boundingBox.width), (float)(currentPos.y + boundingBox.height / 2)),
+							t((float) (currentPos.x + boundingBox.width / 2), (float)currentPos.y),
+							b((float) (currentPos.x + boundingBox.width / 2), (float)currentPos.y + boundingBox.height);
 
 
 			if (!collisionTestLeft && it->collDetect(l)) {
@@ -212,12 +221,13 @@ namespace ginger {
 			boundingBox = s->getTextureRect();
 		}
 		
+		sf::Vector2f currentPos = getPosition();
 		/* --- collision test --- */
 		for (std::vector<ginger::MapObject*>::iterator it = objects->begin(); it != objects->end(); ++it) {
-			sf::Vector2f	l((float) _x, (float) _y), 
-							r((float) (_x + boundingBox.width), (float) (_y + boundingBox.height / 2)),
-							t((float) (_x + boundingBox.width /2), (float) _y), 
-							b((float) (_x + boundingBox.width / 2), (float) _y + boundingBox.height);
+			sf::Vector2f	l((float)currentPos.x, (float)currentPos.y),
+				r((float)(currentPos.x + boundingBox.width), (float)(currentPos.y + boundingBox.height / 2)),
+				t((float)(currentPos.x + boundingBox.width / 2), (float)currentPos.y),
+				b((float)(currentPos.x + boundingBox.width / 2), (float)currentPos.y + boundingBox.height);
 
 			ginger::MapObject* o = *it;
 			
@@ -250,67 +260,114 @@ namespace ginger {
 		}
 	}
 
-	void Player::keyCheck(float time, std::wstring& animTitle) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			if (!collisionTestLeft) {
-				_x -= time * 0.2f;
-			}
+	void Player::move(int direction, float time)
+	{
+		sf::Vector2f currentPos = getPosition();
+		float _x = currentPos.x;
+		float _y = currentPos.y;
 
+		if (direction == DIRECTION_LEFT) {
+			_x -= time * 0.2f;
 			_flip = true;
-		} 
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			if (!collisionTestRight) {
-				_x += time * 0.2f;
-			}
-
+		}
+		else if (direction == DIRECTION_RIGHT) {
+			_x += time * 0.2f;
 			_flip = false;
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			
-			animTitle = L"jump";
-			
-			if (!jump && onGround) {
-				_yJumpStart = _y; 
-			}
-
-			if ((_y > (_yJumpStart - 100.0f)) && !jumpLimit) {
-				_y -= time * 0.7f;
-				jump = true;
-				
-				onGround = false;
-				_log->add("onGround = false;");
-			} else {
-				jump = false;
-				jumpLimit = true;
-			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			animTitle = L"hit";
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			if (onGround) {
-				animTitle = L"run";
-			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			if (onGround) {
-				animTitle = L"run";
-			}
-		}
-		else if (onGround) {
-				animTitle = L"idle";
+		if (onGround) {
+			setAnimation(std::wstring(L"run"));
 		}
 
-		if (!onGround){
-			_y += time * 0.2f;
-			animTitle = L"jump";
-		}
+		setPosition(sf::Vector2f(_x, _y));
 	}
 
-	void Player::updateAnimation(float time, std::wstring& animTitle) {
-		_anim.set(animTitle.c_str(), _x, _y);
+	void Player::jumping(float time)
+	{
+		sf::Vector2f currentPos = getPosition();
+		float _x = currentPos.x;
+		float _y = currentPos.y;
+
+		setAnimation(std::wstring(L"jump"));
+
+		if (!jump && onGround) {
+			_yJumpStart = _y;
+		}
+
+		if ((_y > (_yJumpStart - 100.0f)) && !jumpLimit) {
+			_y -= time * 0.7f;
+			jump = true;
+
+			onGround = false;
+			_log->add("onGround = false;");
+		}
+		else {
+			jump = false;
+			jumpLimit = true;
+		}
+
+		setPosition(sf::Vector2f(_x, _y));
+	}
+
+	void Player::hit(float time)
+	{
+		setAnimation(std::wstring(L"hit"));
+	}
+
+	void Player::stay(float time)
+	{
+		setAnimation(std::wstring(L"idle"));
+	}
+
+	void Player::falling(float time)
+	{
+		sf::Vector2f currentPos = getPosition();
+		float _x = currentPos.x;
+		float _y = currentPos.y;
+
+		_y += time * 0.2f;
+
+		setPosition(sf::Vector2f(_x, _y));
+		setAnimation(std::wstring(L"jump"));
+	}
+
+	bool Player::keyCheck(float time) {
+		bool inMove = false;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			move(DIRECTION_LEFT, time);
+			inMove = true;
+		} 
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			move(DIRECTION_RIGHT, time);
+			inMove = true;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			jumping(time);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			hit(time);
+		}
+		else if (!inMove) {
+			return false;
+		}
+
+		return true;
+	}
+
+	void Player::updateAnimation(float time) {
+		sf::Vector2f currentPos = getPosition();
+		float _x = currentPos.x;
+		float _y = currentPos.y;
+
+		_anim.set(_x, _y);
 		_anim.flip(_flip);
 		_anim.tick(time);
+	}
+
+	void Player::setAnimation(std::wstring& animTitle)
+	{
+		_anim.set(animTitle.c_str());
 	}
 }

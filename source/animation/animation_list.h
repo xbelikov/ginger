@@ -1,5 +1,9 @@
 #include "animation.h"
 
+
+#ifndef GINGER_ANIMATION_LIST
+#define GINGER_ANIMATION_LIST
+
 namespace ginger {
 	class AnimationList
 	{
@@ -12,7 +16,9 @@ namespace ginger {
 		void draw(sf::RenderWindow& window, int x, int y);
 		sf::Sprite* getCurrentFrame() const;
 
-		void set(const wchar_t* animTitle, float x, float y);
+		void set(const wchar_t* animTitle);
+		void set(float x, float y);
+
 		void play();
 		void flip(bool f);
 		void tick(float time);
@@ -26,3 +32,5 @@ namespace ginger {
 		std::map<std::wstring, ginger::Animation> _list;
 	};
 }
+
+#endif //GINGER_ANIMATION_LIST

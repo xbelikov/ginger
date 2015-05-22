@@ -1,6 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#ifndef GINGER_ANIMATION
+#define GINGER_ANIMATION
+
 namespace ginger {
 	class Animation
 	{
@@ -39,3 +42,5 @@ namespace ginger {
 		std::wstring	_title = L"unnamed_animation";
 	};
 }
+
+#endif //GINGER_ANIMATION

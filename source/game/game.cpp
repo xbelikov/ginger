@@ -60,6 +60,12 @@ namespace ginger {
 				}
 			}
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+				sf::Vector2f tempPos = scene.player->getPosition();
+				tempPos.y = 0.0f;
+				scene.player->setPosition(tempPos);
+			}
+
 			_window->clear();
 
 			/* Pause Menu or Update and render Scene */

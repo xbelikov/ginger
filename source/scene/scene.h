@@ -50,12 +50,24 @@ namespace ginger {
 	public:
 		Player(ginger::Logger* log);
 
+		static const int DIRECTION_RIGHT = 1;
+		static const int DIRECTION_LEFT = 2;
+
 		//void	update(float time, std::vector<ginger::SceneObject>& objects);
 		void 	update(float time, std::vector<ginger::MapObject*>* objects);
 		void 	checkCollisions(std::vector<ginger::SceneObject>& objects);
 		void	checkCollisions(std::vector<ginger::MapObject*>* objects);
-		void	updateAnimation(float time, std::wstring& animTitle);
-		void	keyCheck(float time, std::wstring& animTitle);
+
+		void	setAnimation(std::wstring& animTitle);
+		void	updateAnimation(float time);
+
+		bool	keyCheck(float time);
+
+		void	move(int direction, float time);
+		void	jumping(float time);
+		void	hit(float time);
+		void	stay(float time);
+		void	falling(float time);
 
 		bool	onGround = true;
 		int		health = 100;
@@ -82,8 +94,10 @@ namespace ginger {
 		const char*				_texFilePath = "../assets/images/ginger_with_alpha.png";
 
 		ginger::Logger*			_log;
+		/*
 		float					_x = 0.0f;
 		float					_y = 0.0f;
+		*/
 		float					_yJumpStart = 0.0f;
 		bool					_flip = false;
 	};

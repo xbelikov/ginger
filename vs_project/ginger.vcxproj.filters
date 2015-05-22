@@ -34,6 +34,12 @@
     <Filter Include="Файлы исходного кода\map">
       <UniqueIdentifier>{f334c563-0a5e-4053-9afc-b32d304f4c88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\npc">
+      <UniqueIdentifier>{db3a496a-a63b-4cdc-a6d8-bcab1b84f01a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\npc">
+      <UniqueIdentifier>{4ec18fb5-bc2f-4806-9366-aaf33af03135}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main\main.cpp">
@@ -75,6 +81,9 @@
     <ClCompile Include="..\source\map\layers.cpp">
       <Filter>Файлы исходного кода\map</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\npc\npc.cpp">
+      <Filter>Файлы исходного кода\npc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\main\main.h">
@@ -103,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="..\source\map\layers.h">
       <Filter>Заголовочные файлы\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\npc\npc.h">
+      <Filter>Заголовочные файлы\npc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
