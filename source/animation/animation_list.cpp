@@ -6,7 +6,7 @@ namespace ginger {
 		_texture.loadFromFile(textureFileName);
 	}
 
-	void AnimationList::create(const wchar_t* animTitle, std::vector<sf::IntRect>& frames, int speed)
+	void AnimationList::createAnim(const wchar_t* animTitle, std::vector<sf::IntRect>& frames, int speed)
 	{
 		if (_list.find(std::wstring(animTitle)) == _list.end()) {
 			_list[animTitle] = ginger::Animation(animTitle, &_texture, speed);
@@ -17,23 +17,33 @@ namespace ginger {
 			_list[animTitle].addFrame(it->left + it->width, it->top, -it->width, it->height, true);
 		}
 
-		set(animTitle);
+		_sprite.setTexture(getTexture());
+
+		setAnimByTitle(animTitle);
 		set(0.0f, 0.0f);
 	}
 
+	/*
 	void AnimationList::draw(sf::RenderWindow& window, int x, int y)
 	{
 		//_curAnim->setPosition(x, y);
 		//window.draw(_curAnim->getSprite());
 	}
+	*/
 
-	sf::Sprite* AnimationList::getCurrentFrame() const
+	sf::IntRect AnimationList::getCurrentFrame() const
 	{
-		sf::Sprite* s = _curAnim->getSprite();
-		return s;
+		//sf::Sprite* s = _curAnim->getSprite();
+		//return s;
+		return _curAnim->getTargetRect();
 	}
 
-	void AnimationList::set(const wchar_t* animTitle)
+	sf::Texture AnimationList::getTexture()
+	{
+		return _texture;
+	}
+
+	void AnimationList::setAnimByTitle(const wchar_t* animTitle)
 	{
 		bool eqTitles = false;
 		bool hasAnim = (_curAnim != 0);
@@ -88,5 +98,24 @@ namespace ginger {
 		sf::Image img = _texture.copyToImage();
 		img.createMaskFromColor(color);
 		_texture.loadFromImage(img);
+	}
+
+	void AnimationList::updateAnim(float time, float _x, float _y, bool _flip) {
+		//sf::Vector2f currentPos = getPosition();
+		//float _x = currentPos.x;
+		//float _y = currentPos.y;
+
+		//_anim.set(_x, _y);
+		//_anim.flip(_flip);
+		//_anim.tick(time);
+
+		//_currentSprite.setTexture(_anim.getTexture());
+		//_currentSprite.setTextureRect(_anim.getCurrentFrame());
+		
+		set(_x, _y);
+		flip(_flip);
+		tick(time);
+
+		_sprite.setTextureRect(getCurrentFrame());
 	}
 }

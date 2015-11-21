@@ -40,6 +40,12 @@
     <Filter Include="Заголовочные файлы\npc">
       <UniqueIdentifier>{4ec18fb5-bc2f-4806-9366-aaf33af03135}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\entity">
+      <UniqueIdentifier>{04589995-696e-4397-8b11-6b5c7085485e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\entity">
+      <UniqueIdentifier>{c098c474-edbb-4fa6-b0d5-d0ce97f57052}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main\main.cpp">
@@ -84,6 +90,9 @@
     <ClCompile Include="..\source\npc\npc.cpp">
       <Filter>Файлы исходного кода\npc</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\entity\entity.cpp">
+      <Filter>Файлы исходного кода\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\main\main.h">
@@ -115,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\source\npc\npc.h">
       <Filter>Заголовочные файлы\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\entity\entity.h">
+      <Filter>Заголовочные файлы\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

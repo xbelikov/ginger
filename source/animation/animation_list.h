@@ -1,22 +1,25 @@
 #include "animation.h"
+#include "../entity/entity.h"
 
 
 #ifndef GINGER_ANIMATION_LIST
 #define GINGER_ANIMATION_LIST
 
 namespace ginger {
-	class AnimationList
+	class AnimationList : public ginger::Entity
 	{
 	public:
 		AnimationList() {};
 		void loadTexture(const char* textureFileName);
 
-		void create(const wchar_t* _animTitle, std::vector<sf::IntRect>& frames, int speed);
+		void createAnim(const wchar_t* _animTitle, std::vector<sf::IntRect>& frames, int speed);
 		
-		void draw(sf::RenderWindow& window, int x, int y);
-		sf::Sprite* getCurrentFrame() const;
+		void updateAnim(float time, float _x, float _y, bool flip);
+		//void draw(sf::RenderWindow& window, int x, int y);
+		sf::IntRect getCurrentFrame() const;
+		sf::Texture getTexture();
 
-		void set(const wchar_t* animTitle);
+		void setAnimByTitle(const wchar_t* animTitle);
 		void set(float x, float y);
 
 		void play();
@@ -26,6 +29,11 @@ namespace ginger {
 		void setTransparentColor(sf::Color color);
 
 	private:
+		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const {
+			target.draw(*_curAnim->getSprite());
+		};
+
+		sf::Sprite			_sprite;
 		sf::Texture			_texture;
 		ginger::Animation*	_curAnim = 0;
 

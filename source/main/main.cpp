@@ -3,7 +3,7 @@
 int main()
 {
 	setlocale(LC_ALL, "");
-	
+
 	ginger::Game game;
 
 	if(game.start()) {

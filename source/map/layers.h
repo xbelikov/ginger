@@ -114,7 +114,7 @@ namespace ginger {
 		std::map<std::string, std::vector<int>>		staticObjectsByTypes;
 		
 													/* -- ENABLE DRAW OBJECTS -- */
-		bool										enableDrawObjects = true;
+		bool										enableDrawObjects = false;
 
 		int											globalOffsetX = 0;
 		int											globalOffsetY = 0;

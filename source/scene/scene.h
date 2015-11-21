@@ -7,6 +7,7 @@
 #include "../animation/animation_list.h"
 #include "../logger/logger.h"
 #include "../map/map.h"
+#include "../entity/entity.h"
 
 namespace ginger {
 	class SceneObject : public sf::Drawable, public sf::Transformable
@@ -45,7 +46,7 @@ namespace ginger {
 		sf::Sprite _sprite;
 	};
 
-	class Player : public sf::Drawable, public sf::Transformable
+	class Player : public ginger::AnimationList //sf::Drawable, public sf::Transformable
 	{
 	public:
 		Player(ginger::Logger* log);
@@ -82,13 +83,9 @@ namespace ginger {
 		bool collisionTestBottom = false;
 
 	private:
-		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const {
-			sf::Sprite* sprite = _anim.getCurrentFrame();
-			target.draw(*sprite, states);
-		};
-
 		void _loadSpriteData();
-		ginger::AnimationList	_anim;
+		//ginger::AnimationList	_anim;
+		//sf::Sprite			_currentSprite;
 
 		const char*				_xmlFilePath = "../assets/animations/ginger.xml";
 		const char*				_texFilePath = "../assets/images/ginger_with_alpha.png";

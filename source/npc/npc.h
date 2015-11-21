@@ -16,7 +16,7 @@ namespace ginger {
 	public:
 		Npc();
 
-		virtual void update();
+		virtual void update(float tickTime);
 		
 		virtual void move();
 		virtual void jumping();
@@ -27,7 +27,7 @@ namespace ginger {
 		int		jumpHeight = 0;
 
 	private:
-		float	currentTime = 0.0f;
+		float	tickTime = 0.0f;
 	};
 }
 */

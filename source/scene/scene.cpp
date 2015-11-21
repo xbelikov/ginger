@@ -66,7 +66,8 @@ namespace ginger {
 		_log = log;
 		_loadSpriteData();
 
-		_anim.set(L"idle");
+		//_anim.setAnimByTitle(L"idle");
+		setAnimByTitle(L"idle");
 	}
 
 	void Player::_loadSpriteData()
@@ -87,8 +88,11 @@ namespace ginger {
 		/* --- */
 
 		/* --- FIXME: выше написал --- */
-		_anim.loadTexture(_texFilePath);
-		_anim.setTransparentColor(tColor);
+		//_anim.loadTexture(_texFilePath);
+		//_anim.setTransparentColor(tColor);
+
+		loadTexture(_texFilePath);
+		setTransparentColor(tColor);
 		_log->add(_texFilePath);
 		/* --- */
 
@@ -123,7 +127,8 @@ namespace ginger {
 			std::wstring wtitle;
 			ginger::string_to_wstring(animTitle, wtitle);
 
-			_anim.create(wtitle.c_str(), frames, speed);
+			//_anim.create(wtitle.c_str(), frames, speed);
+			createAnim(wtitle.c_str(), frames, speed);
 
 			animEl = animEl->NextSiblingElement("animation");
 		}
@@ -158,7 +163,8 @@ namespace ginger {
 		}
 		/* --- */
 
-		updateAnimation(time);
+		sf::Vector2f currentPos = getPosition();
+		updateAnim(time, currentPos.x, currentPos.y, _flip);
 	}
 
 	void Player::checkCollisions(std::vector<ginger::SceneObject>& objects) {
@@ -168,8 +174,9 @@ namespace ginger {
 		collisionTestBottom = false;
 		
 		if (!boundingBox.height && !boundingBox.width) {
-			sf::Sprite* s = _anim.getCurrentFrame();
-			boundingBox = s->getTextureRect();
+			//sf::Sprite* s = _anim.getCurrentFrame();
+			//sf::IntRect r = _anim.getCurrentFrame();
+			boundingBox = getCurrentFrame(); // s->getTextureRect();
 		}
 		
 		/* --- collision test --- */
@@ -217,8 +224,9 @@ namespace ginger {
 		collisionTestBottom = false;
 		
 		if (!boundingBox.height && !boundingBox.width) {
-			sf::Sprite* s = _anim.getCurrentFrame();
-			boundingBox = s->getTextureRect();
+			//sf::Sprite* s = _anim.getCurrentFrame();
+			//sf::IntRect r = _anim.getCurrentFrame();
+			boundingBox = getCurrentFrame(); //s->getTextureRect();
 		}
 		
 		sf::Vector2f currentPos = getPosition();
@@ -356,18 +364,9 @@ namespace ginger {
 		return true;
 	}
 
-	void Player::updateAnimation(float time) {
-		sf::Vector2f currentPos = getPosition();
-		float _x = currentPos.x;
-		float _y = currentPos.y;
-
-		_anim.set(_x, _y);
-		_anim.flip(_flip);
-		_anim.tick(time);
-	}
-
 	void Player::setAnimation(std::wstring& animTitle)
 	{
-		_anim.set(animTitle.c_str());
+		//_anim.setAnimByTitle(animTitle.c_str());
+		setAnimByTitle(animTitle.c_str());
 	}
 }

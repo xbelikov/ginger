@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="..\source\animation\animation.cpp" />
     <ClCompile Include="..\source\animation\animation_list.cpp" />
+    <ClCompile Include="..\source\entity\entity.cpp" />
     <ClCompile Include="..\source\npc\npc.cpp" />
     <ClCompile Include="..\source\game\game.cpp" />
     <ClCompile Include="..\source\logger\logger.cpp" />
@@ -92,6 +93,7 @@
   <ItemGroup>
     <ClInclude Include="..\source\animation\animation.h" />
     <ClInclude Include="..\source\animation\animation_list.h" />
+    <ClInclude Include="..\source\entity\entity.h" />
     <ClInclude Include="..\source\npc\npc.h" />
     <ClInclude Include="..\source\game\game.h" />
     <ClInclude Include="..\source\logger\logger.h" />
