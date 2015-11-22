@@ -46,6 +46,12 @@
     <Filter Include="Файлы исходного кода\entity">
       <UniqueIdentifier>{c098c474-edbb-4fa6-b0d5-d0ce97f57052}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\scene">
+      <UniqueIdentifier>{06b37590-72bc-441d-b183-3fc6db8bdb22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\scene">
+      <UniqueIdentifier>{de52572e-dca7-4f8e-a8b8-5453136a5226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main\main.cpp">
@@ -55,9 +61,6 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="..\source\logger\logger.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\scene\scene.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="..\..\tinyxml\tinystr.cpp">
@@ -93,6 +96,15 @@
     <ClCompile Include="..\source\entity\entity.cpp">
       <Filter>Файлы исходного кода\entity</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\scene\scene.cpp">
+      <Filter>Файлы исходного кода\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\scene\scene_object.cpp">
+      <Filter>Файлы исходного кода\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\scene\player.cpp">
+      <Filter>Файлы исходного кода\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\main\main.h">
@@ -102,9 +114,6 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="..\source\logger\logger.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\scene\scene.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="..\source\animation\animation.h">
@@ -127,6 +136,15 @@
     </ClInclude>
     <ClInclude Include="..\source\entity\entity.h">
       <Filter>Заголовочные файлы\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\scene\scene.h">
+      <Filter>Заголовочные файлы\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\scene\scene_object.h">
+      <Filter>Заголовочные файлы\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\scene\player.h">
+      <Filter>Заголовочные файлы\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

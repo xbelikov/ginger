@@ -87,7 +87,9 @@
     <ClCompile Include="..\source\main\main.cpp" />
     <ClCompile Include="..\source\map\map.cpp" />
     <ClCompile Include="..\source\map\layers.cpp" />
+    <ClCompile Include="..\source\scene\player.cpp" />
     <ClCompile Include="..\source\scene\scene.cpp" />
+    <ClCompile Include="..\source\scene\scene_object.cpp" />
     <ClCompile Include="..\source\utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +102,9 @@
     <ClInclude Include="..\source\main\main.h" />
     <ClInclude Include="..\source\map\map.h" />
     <ClInclude Include="..\source\map\layers.h" />
+    <ClInclude Include="..\source\scene\player.h" />
     <ClInclude Include="..\source\scene\scene.h" />
+    <ClInclude Include="..\source\scene\scene_object.h" />
     <ClInclude Include="..\source\utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
