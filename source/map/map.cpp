@@ -74,7 +74,8 @@ namespace ginger {
 			mapTileset = new ginger::MapTileset;
 		}
 		catch (std::bad_alloc &ab) {
-			_log->add("Ошибка: не удалось выделить память для блока mapTileset");
+			std::string msg = "Ошибка: не удалось выделить память для блока mapTileset (" + std::string(ab.what()) + ")";
+			_log->add(msg.c_str());
 			return 0;
 		}
 
@@ -143,7 +144,8 @@ namespace ginger {
 			mapImage = new ginger::MapImage;
 		}
 		catch (std::bad_alloc &ab) {
-			_log->add("Ошибка: не удалось выделить память для блока mapImage");
+			std::string msg = "Ошибка: не удалось выделить память для блока mapImage (" + std::string(ab.what()) + ")";
+			_log->add(msg.c_str());
 			return 0;
 		}
 
@@ -193,17 +195,18 @@ namespace ginger {
 				mapObject = new ginger::MapObject;
 			}
 			catch (std::bad_alloc &ab) {
-				_log->add("Ошибка: не удалось выделить память для блока mapObject");
+				std::string msg = "Ошибка: не удалось выделить память для блока mapObject (" + std::string(ab.what()) + ")";
+				_log->add(msg.c_str());
 				return 0;
 			}
 
 			mapObject->name = objectName;
 			mapObject->type = objectType;
 			mapObject->rect = objectPosSize;
-			mapObject->boundingBox.left = objectPosSize.left;
-			mapObject->boundingBox.top = objectPosSize.top;
-			mapObject->boundingBox.width = objectPosSize.width;
-			mapObject->boundingBox.height = objectPosSize.height;
+			mapObject->boundingBox.left = (float) objectPosSize.left;
+			mapObject->boundingBox.top = (float) objectPosSize.top;
+			mapObject->boundingBox.width = (float) objectPosSize.width;
+			mapObject->boundingBox.height = (float) objectPosSize.height;
 
 			if (objectCollision) {
 				mapObject->collision = true;

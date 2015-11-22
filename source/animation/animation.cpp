@@ -48,7 +48,7 @@ namespace ginger {
 
 			_currentTick = 1;
 		} else {
-			_currentTick += round(time);
+			_currentTick += (int) round(time);
 		}
 	}
 

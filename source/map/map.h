@@ -4,13 +4,15 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "layers.h"
 #include <map>
 #include <string>
 
 #include <tinyxml.h>
 #include "../utils/utils.h"
 #include "../logger/logger.h"
+
+#include "layers.h"
+#include "map_object.h"
 
 
 #define GINGER_MAP_OBJECT_NOT_FOUND -1

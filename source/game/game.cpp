@@ -4,7 +4,7 @@ namespace ginger {
 	int Game::start()
 	{
 		_window = new sf::RenderWindow(sf::VideoMode(_gWidth, _gHeight), _gameTitle);
-		_view = new sf::View(sf::Vector2f(400, 300), sf::Vector2f(_gWidth, _gHeight));
+		_view = new sf::View(sf::Vector2f(400, 300), sf::Vector2f((float) _gWidth, (float) _gHeight));
 		_view->move(0, 200);
 
 		_window->setView(*_view);
@@ -89,7 +89,7 @@ namespace ginger {
 
 	void Game::drawMenu()
 	{
-		sf::View viewMenu(sf::Vector2f(400, 300), sf::Vector2f(_gWidth, _gHeight));
+		sf::View viewMenu(sf::Vector2f(400, 300), sf::Vector2f((float) _gWidth, (float) _gHeight));
 		viewMenu.move(0, 100);
 		_window->setView(viewMenu);
 		_window->draw(_defaultText);

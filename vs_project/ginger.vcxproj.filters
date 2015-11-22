@@ -105,6 +105,15 @@
     <ClCompile Include="..\source\scene\player.cpp">
       <Filter>Файлы исходного кода\scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\map\map_image.cpp">
+      <Filter>Файлы исходного кода\map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\map\map_object.cpp">
+      <Filter>Файлы исходного кода\map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\map\map_tileset.cpp">
+      <Filter>Файлы исходного кода\map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\main\main.h">
@@ -145,6 +154,15 @@
     </ClInclude>
     <ClInclude Include="..\source\scene\player.h">
       <Filter>Заголовочные файлы\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\map\map_image.h">
+      <Filter>Заголовочные файлы\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\map\map_object.h">
+      <Filter>Заголовочные файлы\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\map\map_tileset.h">
+      <Filter>Заголовочные файлы\map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
