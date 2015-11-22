@@ -13,26 +13,34 @@ namespace ginger {
 	{
 	public:
 		/*
-		 * Инициализируем игру, 
-		 * загружаем всё, что необходимо
+		 * Game init 
+		 * loading some configuration and resources
 		 */
 		int start();
 
 		/*
-		 * Выгружаем всё, закрываем приложение
+		 * Free all, close app
 		 */
 		void stop();
 
 		/*
-		 * Основной цикл:
-		 * Очищаем буфферы, рассчитываем логику, меняем состояния, суммируем статистику, рисуем
+		 * Main cycle:
+		 * Poll events, do some logic, change states, compute statistics, clear frame buffer, draw.
 		 */
 		void cycle();
 
+		/*
+		 * Draw default menu
+		 */
 		void drawMenu();
+
+		/*
+		 * Create default menu
+		 */
 		void prepareMenu();
+
 	private:
-		const wchar_t*							_gameTitle = L"Тест";
+		const wchar_t*							_gameTitle = L"Ginger";
 
 		sf::RenderWindow*						_window = 0;
 		sf::View*								_view = 0;
@@ -44,9 +52,6 @@ namespace ginger {
 		const char*								_defaultFontPath = "../assets/fonts/PTS55F.ttf";
 		sf::Font								_defaultFont;
 		sf::Text								_defaultText;
-		//std::map<std::wstring, ginger::Scene>	_scenes;
-		//ginger::Scene*						_currentScene = 0;
-		//void									_drawScene(ginger::Scene& scene);
 	};
 
 }

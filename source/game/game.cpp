@@ -108,11 +108,4 @@ namespace ginger {
 		_defaultText.setString(L"Пауза");
 		_defaultText.setPosition(sf::Vector2f(640 / 2, 480 / 2));
 	}
-
-	/*
-	void Game::_drawScene(ginger::Scene& scene)
-	{
-
-	}
-	*/
 }
