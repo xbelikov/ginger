@@ -1,7 +1,9 @@
-#include <SFML/Graphics.hpp>
-
 #ifndef GINGER_ENTITY
 #define GINGER_ENTITY
+
+
+#include <SFML/Graphics.hpp>
+
 
 namespace ginger {
 

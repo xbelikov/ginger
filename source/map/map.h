@@ -1,3 +1,7 @@
+#ifndef GINGER_MAP
+#define GINGER_MAP
+
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "layers.h"
@@ -8,8 +12,6 @@
 #include "../utils/utils.h"
 #include "../logger/logger.h"
 
-#ifndef GINGER_MAP
-#define GINGER_MAP
 
 #define GINGER_MAP_OBJECT_NOT_FOUND -1
 #define GINGER_MAP_TYPE_COLLISION "collision"

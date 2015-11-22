@@ -1,3 +1,7 @@
+#ifndef GINGER_SCENE_OBJECT
+#define GINGER_SCENE_OBJECT
+
+
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
@@ -7,8 +11,6 @@
 #include "../animation/animation_list.h"
 #include "../logger/logger.h"
 
-#ifndef GINGER_SCENE_OBJECT
-#define GINGER_SCENE_OBJECT
 
 namespace ginger {
 	class SceneObject : public sf::Drawable, public sf::Transformable

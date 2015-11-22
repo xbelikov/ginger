@@ -1,3 +1,7 @@
+#ifndef GINGER_GAME
+#define GINGER_GAME
+
+
 #include <SFML/Graphics.hpp>
 #include "../logger/logger.h"
 #include "../scene/scene.h"
@@ -46,3 +50,5 @@ namespace ginger {
 	};
 
 }
+
+#endif

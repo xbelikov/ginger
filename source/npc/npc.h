@@ -1,12 +1,13 @@
+#ifndef GINGER_NPC
+#define GINGER_NPC
+
+
 #include <SFML/Graphics.hpp>
 #include "../animation/animation_list.h"
 #include "../scene/scene.h"
 #include "../logger/logger.h"
 #include "../map/map.h"
 
-
-#ifndef GINGER_NPC
-#define GINGER_NPC
 
 /*
 namespace ginger {

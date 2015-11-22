@@ -1,8 +1,10 @@
+#ifndef GINGER_ANIMATION
+#define GINGER_ANIMATION
+
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#ifndef GINGER_ANIMATION
-#define GINGER_ANIMATION
 
 namespace ginger {
 	class Animation

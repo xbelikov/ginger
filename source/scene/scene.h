@@ -4,11 +4,15 @@
 
 #include <tinyxml.h>
 
+#ifndef GINGER_SCENE
+#define GINGER_SCENE
+
 #include "../animation/animation_list.h"
 #include "../logger/logger.h"
 #include "../map/map.h"
 #include "scene_object.h"
 #include "player.h"
+
 
 namespace ginger {
 	class Scene
@@ -35,3 +39,5 @@ namespace ginger {
 		sf::RenderWindow*					_window = 0;
 	};
 }
+
+#endif

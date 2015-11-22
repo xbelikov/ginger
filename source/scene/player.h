@@ -1,6 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
+#ifndef GINGER_SCENE_PLAYER
+#define GINGER_SCENE_PLAYER
+
 
 #include <tinyxml.h>
 
@@ -8,6 +11,8 @@
 #include "../logger/logger.h"
 #include "../map/map.h"
 #include "scene_object.h"
+
+
 
 namespace ginger {
 	class Player : public ginger::AnimationList //sf::Drawable, public sf::Transformable
@@ -63,3 +68,5 @@ namespace ginger {
 		bool					_flip = false;
 	};
 }
+
+#endif

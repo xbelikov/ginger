@@ -1,9 +1,10 @@
+#ifndef GINGER_ANIMATION_LIST
+#define GINGER_ANIMATION_LIST
+
+
 #include "animation.h"
 #include "../entity/entity.h"
 
-
-#ifndef GINGER_ANIMATION_LIST
-#define GINGER_ANIMATION_LIST
 
 namespace ginger {
 	class AnimationList : public ginger::Entity

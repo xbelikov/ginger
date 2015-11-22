@@ -1,9 +1,11 @@
+#ifndef GINGER_LAYERS
+#define GINGER_LAYERS
+
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <iostream>
  
-#ifndef GINGER_LAYERS
-#define GINGER_LAYERS
 
 namespace ginger {
 	enum LayerTypes {

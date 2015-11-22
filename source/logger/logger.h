@@ -1,3 +1,7 @@
+#ifndef GINGER_LOGGER
+#define GINGER_LOGGER
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -5,10 +9,8 @@
 #include <wchar.h>
 #include <time.h>
 
-#define GINGER_DEBUG = 1;
 
-#ifndef GINGER_LOGGER
-#define GINGER_LOGGER
+#define GINGER_DEBUG = 1;
 
 namespace ginger {
 	static const char* LOGGER_START = "Logger Start";
