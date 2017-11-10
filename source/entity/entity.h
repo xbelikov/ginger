@@ -3,16 +3,14 @@
 
 
 #include <SFML/Graphics.hpp>
+#include "../components/components.h"
 
 
 namespace ginger {
 
-	class Entity: public sf::Transformable, public sf::Drawable {
-	public: 
-		virtual void update(float time) {};
-
+	class Entity {
 	private:
-		virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const {};
+		ginger::Component components;
 	};
 }
 

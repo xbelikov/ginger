@@ -3,8 +3,8 @@
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32" spacing="1" margin="1">
   <image source="Jungle_03.png" trans="3b5421" width="232" height="265"/>
  </tileset>
- <imagelayer name="i" x="-913" y="-545">
-  <image source="IMG_1971.JPG"/>
+ <imagelayer name="i" x="0" y="0">
+  <image source="back2.jpg"/>
  </imagelayer>
  <layer name="t_1" width="24" height="24">
   <data>

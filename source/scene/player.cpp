@@ -2,7 +2,7 @@
 #include "../utils/utils.h"
 
 namespace ginger {
-	Player::Player(ginger::Logger* log)
+	Player::Player(ginger::Logger* log) : Physical(log)
 	{
 		_log = log;
 		_loadSpriteData();
@@ -89,8 +89,14 @@ namespace ginger {
 	*/
 	void Player::update(float time, std::vector<ginger::MapObject*>* objects)
 	{
-		//std::wstring animTitle = L"idle";
-		checkCollisions(objects);
+		if (!boundingBox.height && !boundingBox.width) {
+			boundingBox = getCurrentFrame();
+		}
+
+		sf::Vector2f currentPos;
+		get(currentPos);
+
+		checkCollisions(objects, boundingBox, currentPos);
 
 		if (!onGround) {
 			falling(time);
@@ -103,115 +109,14 @@ namespace ginger {
 			}
 		}
 		/* --- */
-
-		sf::Vector2f currentPos = getPosition();
 		updateAnim(time, currentPos.x, currentPos.y, _flip);
-	}
-
-	void Player::checkCollisions(std::vector<ginger::SceneObject>& objects) {
-		collisionTestLeft = false;
-		collisionTestRight = false;
-		collisionTestTop = false;
-		collisionTestBottom = false;
-
-		if (!boundingBox.height && !boundingBox.width) {
-			//sf::Sprite* s = _anim.getCurrentFrame();
-			//sf::IntRect r = _anim.getCurrentFrame();
-			boundingBox = getCurrentFrame(); // s->getTextureRect();
-		}
-
-		/* --- collision test --- */
-		sf::Vector2f currentPos = getPosition();
-		for (std::vector<ginger::SceneObject>::iterator it = objects.begin(); it != objects.end(); ++it) {
-			sf::Vector2f	l((float)currentPos.x, (float)currentPos.y),
-				r((float)(currentPos.x + boundingBox.width), (float)(currentPos.y + boundingBox.height / 2)),
-				t((float)(currentPos.x + boundingBox.width / 2), (float)currentPos.y),
-				b((float)(currentPos.x + boundingBox.width / 2), (float)currentPos.y + boundingBox.height);
-
-
-			if (!collisionTestLeft && it->collDetect(l)) {
-				collisionTestLeft = true;
-				_log->add("collisionTestLeft = true;");
-			}
-
-			if (!collisionTestRight && it->collDetect(r)) {
-				collisionTestRight = true;
-				_log->add("collisionTestRight = true;");
-			}
-
-			if (!collisionTestTop && it->collDetect(t)) {
-				collisionTestTop = true;
-				_log->add("collisionTestTop = true;");
-			}
-
-			if (!collisionTestBottom && it->collDetect(b)) {
-				onGround = true;
-				jumpLimit = false;
-				collisionTestBottom = true;
-				//_log->add("onGround = true;");
-			}
-		}
-		/* --- */
-
-		if (!collisionTestBottom) {
-			onGround = false;
-		}
-	}
-
-	void Player::checkCollisions(std::vector<ginger::MapObject*>* objects) {
-		collisionTestLeft = false;
-		collisionTestRight = false;
-		collisionTestTop = false;
-		collisionTestBottom = false;
-
-		if (!boundingBox.height && !boundingBox.width) {
-			//sf::Sprite* s = _anim.getCurrentFrame();
-			//sf::IntRect r = _anim.getCurrentFrame();
-			boundingBox = getCurrentFrame(); //s->getTextureRect();
-		}
-
-		sf::Vector2f currentPos = getPosition();
-		/* --- collision test --- */
-		for (std::vector<ginger::MapObject*>::iterator it = objects->begin(); it != objects->end(); ++it) {
-			sf::Vector2f	l((float)currentPos.x, (float)currentPos.y),
-				r((float)(currentPos.x + boundingBox.width), (float)(currentPos.y + boundingBox.height / 2)),
-				t((float)(currentPos.x + boundingBox.width / 2), (float)currentPos.y),
-				b((float)(currentPos.x + boundingBox.width / 2), (float)currentPos.y + boundingBox.height);
-
-			ginger::MapObject* o = *it;
-
-			if (!collisionTestLeft && o->collDetect(l)) {
-				collisionTestLeft = true;
-				_log->add("collisionTestLeft = true;");
-			}
-
-			if (!collisionTestRight && o->collDetect(r)) {
-				collisionTestRight = true;
-				_log->add("collisionTestRight = true;");
-			}
-
-			if (!collisionTestTop && o->collDetect(t)) {
-				collisionTestTop = true;
-				_log->add("collisionTestTop = true;");
-			}
-
-			if (!collisionTestBottom && o->collDetect(b)) {
-				onGround = true;
-				jumpLimit = false;
-				collisionTestBottom = true;
-				//_log->add("onGround = true;");
-			}
-		}
-		/* --- */
-
-		if (!collisionTestBottom) {
-			onGround = false;
-		}
 	}
 
 	void Player::move(int direction, float time)
 	{
-		sf::Vector2f currentPos = getPosition();
+		sf::Vector2f currentPos;
+		get(currentPos); //getPosition();
+
 		float _x = currentPos.x;
 		float _y = currentPos.y;
 
@@ -228,12 +133,14 @@ namespace ginger {
 			setAnimation(std::wstring(L"run"));
 		}
 
-		setPosition(sf::Vector2f(_x, _y));
+		set(_x, _y);
 	}
 
 	void Player::jumping(float time)
 	{
-		sf::Vector2f currentPos = getPosition();
+		sf::Vector2f currentPos;
+		get(currentPos); //getPosition();
+
 		float _x = currentPos.x;
 		float _y = currentPos.y;
 
@@ -255,7 +162,7 @@ namespace ginger {
 			jumpLimit = true;
 		}
 
-		setPosition(sf::Vector2f(_x, _y));
+		set(_x, _y);
 	}
 
 	void Player::hit(float time)
@@ -270,13 +177,15 @@ namespace ginger {
 
 	void Player::falling(float time)
 	{
-		sf::Vector2f currentPos = getPosition();
+		sf::Vector2f currentPos;
+		get(currentPos); //getPosition();
+
 		float _x = currentPos.x;
 		float _y = currentPos.y;
 
 		_y += time * 0.2f;
 
-		setPosition(sf::Vector2f(_x, _y));
+		set(_x, _y);
 		setAnimation(std::wstring(L"jump"));
 	}
 

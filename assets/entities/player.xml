@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity>
+	<name>player</name>
+	<components>
+		<component name="CharacterStats">
+			<health>100</health>
+			<defence>1</defence>
+			<damage>1</damage>
+			<speed>1</speed>
+		</component>
+		<component name="Sprite">
+			<width>60</width> 
+			<height>80</height>
+			<vertical-align>bottom</vertical-align> 
+			<horizontal-align>center</horizontal-align>
+			<texture>ginger_with_alpha.png</texture>
+			<animations>ginger.xml</animations>
+		</component>
+	</components>
+</entity>

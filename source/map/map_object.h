@@ -5,10 +5,11 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../components/physical.h"
 
 
 namespace ginger {
-	struct MapObject : public sf::Drawable, public sf::Transformable {
+	struct MapObject : public sf::Drawable, public sf::Transformable, public Physical {
 		int					id = 0;
 		std::string			name = "object";
 		std::string			type = "default";

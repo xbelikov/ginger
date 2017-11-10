@@ -12,7 +12,7 @@ namespace ginger {
 			_list[animTitle] = ginger::Animation(animTitle, &_texture, speed);
 		}
 
-		for (std::vector<sf::IntRect>::iterator it = frames.begin(); it != frames.end(); ++it) {
+		for (auto it = frames.begin(); it != frames.end(); ++it) {
 			_list[animTitle].addFrame(it->left, it->top, it->width, it->height, false);
 			_list[animTitle].addFrame(it->left + it->width, it->top, -it->width, it->height, true);
 		}
@@ -70,7 +70,14 @@ namespace ginger {
 
 		if (hasAnim) {
 			_curAnim->setPosition(x, y);
+			_curPos.x = x;
+			_curPos.y = y;
 		}
+	}
+
+	void AnimationList::get(sf::Vector2f &v)
+	{
+		v = _curPos;
 	}
 
 	void AnimationList::play()
@@ -95,7 +102,7 @@ namespace ginger {
 
 	void AnimationList::setTransparentColor(sf::Color color)
 	{
-		sf::Image img = _texture.copyToImage();
+		auto img = _texture.copyToImage();
 		img.createMaskFromColor(color);
 		_texture.loadFromImage(img);
 	}

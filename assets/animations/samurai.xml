@@ -1,0 +1,55 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="samurai.png" transparentColor="0">
+ <animation title="idle" delay="150">
+  <cut w="49" x="10" y="19" h="67" row="1" col="1"/>
+ </animation>
+ <animation title="run" delay="80">
+  <cut w="52" x="17" y="99" h="61" row="1" col="1"/>
+  <cut w="57" x="76" y="103" h="57" row="1" col="1"/>
+  <cut w="56" x="138" y="99" h="61" row="1" col="1"/>
+  <cut w="51" x="201" y="100" h="60" row="1" col="1"/>
+  <cut w="49" x="259" y="103" h="57" row="1" col="1"/>
+  <cut w="47" x="316" y="100" h="60" row="1" col="1"/>
+ </animation>
+ <animation title="jump" delay="150">
+  <cut w="51" x="17" y="473" h="68" row="1" col="1"/>
+  <cut w="51" x="84" y="473" h="68" row="1" col="1"/>
+  <cut w="50" x="154" y="470" h="59" row="1" col="1"/>
+ </animation>
+ <animation title="falling" delay="150">
+  <cut w="50" x="154" y="470" h="59" row="1" col="1"/>
+  <cut w="48" x="220" y="462" h="79" row="1" col="1"/>
+  <cut w="48" x="278" y="463" h="78" row="1" col="1"/>
+ </animation>
+ <animation title="landing" delay="150">
+  <cut w="50" x="338" y="482" h="59" row="1" col="1"/>
+ </animation>
+ <animation title="hit" delay="150">
+  <cut w="51" x="23" y="189" h="53" row="1" col="1"/>
+  <cut w="54" x="93" y="188" h="54" row="1" col="1"/>
+  <cut w="70" x="164" y="188" h="54" row="1" col="1"/>
+  <cut w="94" x="245" y="190" h="52" row="1" col="1"/>
+  <cut w="92" x="347" y="190" h="52" row="1" col="1"/>
+  <cut w="50" x="454" y="183" h="59" row="1" col="1"/>
+  <cut w="49" x="515" y="179" h="63" row="1" col="1"/>
+ </animation>
+ <animation title="cut" delay="150">
+  <cut w="51" x="18" y="295" h="53" row="1" col="1"/>
+  <cut w="54" x="89" y="294" h="54" row="1" col="1"/>
+  <cut w="42" x="161" y="261" h="82" row="1" col="1"/>
+  <cut w="48" x="224" y="264" h="69" row="1" col="1"/>
+  <cut w="95" x="288" y="293" h="59" row="1" col="1"/>
+  <cut w="75" x="393" y="297" h="52" row="1" col="1"/>
+  <cut w="50" x="491" y="289" h="59" row="1" col="1"/>
+  <cut w="49" x="557" y="285" h="63" row="1" col="1"/>
+ </animation>
+ <animation title="damage" delay="150">
+  <cut w="62" x="401" y="28" h="58" row="1" col="1"/>
+ </animation>
+ <animation title="death" delay="400">
+  <cut w="62" x="401" y="28" h="58" row="1" col="1"/>
+  <cut w="61" x="534" y="50" h="36" row="1" col="1"/>
+  <cut w="61" x="607" y="50" h="36" row="1" col="1"/>
+  <cut w="67" x="679" y="68" h="26" row="1" col="1"/>
+ </animation>
+</sprites>

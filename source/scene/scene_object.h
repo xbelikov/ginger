@@ -9,11 +9,12 @@
 #include <tinyxml.h>
 
 #include "../animation/animation_list.h"
+#include "../components/physical.h"
 #include "../logger/logger.h"
 
 
 namespace ginger {
-	class SceneObject : public sf::Drawable, public sf::Transformable
+	class SceneObject : public sf::Drawable, public sf::Transformable, public Physical
 	{
 	public:
 		bool collision = true;

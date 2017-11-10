@@ -51,7 +51,7 @@ namespace ginger {
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-				if (!lastStateChangeAt || (lastStateChangeAt > time * 0.2f)) {
+				if (!lastStateChangeAt || (lastStateChangeAt > time * 0.6f)) {
 					pause = !pause;
 					lastStateChangeAt = 1.0f;
 				}
@@ -61,9 +61,11 @@ namespace ginger {
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
-				sf::Vector2f tempPos = scene.player->getPosition();
+				sf::Vector2f tempPos;
+				scene.player->get(tempPos);
+
 				tempPos.y = 0.0f;
-				scene.player->setPosition(tempPos);
+				scene.player->set(tempPos.x, tempPos.y);
 			}
 
 			_window->clear();
@@ -80,7 +82,7 @@ namespace ginger {
 
 			_window->display();
 
-			time = (float) clock.getElapsedTime().asMilliseconds();
+			time = static_cast<float>(clock.getElapsedTime().asMilliseconds());
 			clock.restart();
 		}
 
@@ -90,7 +92,7 @@ namespace ginger {
 	void Game::drawMenu()
 	{
 		sf::View viewMenu(sf::Vector2f(400, 300), sf::Vector2f((float) _gWidth, (float) _gHeight));
-		viewMenu.move(0, 100);
+		viewMenu.move(0, 200);
 		_window->setView(viewMenu);
 		_window->draw(_defaultText);
 	}

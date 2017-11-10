@@ -17,11 +17,9 @@ namespace ginger {
 		OBJECTS
 	};
 
-	
-	
-	
+	class Layers: public sf::Drawable, public sf::Transformable {
 
-	struct Layers : public sf::Drawable, public sf::Transformable {
+	public:
 		std::map<std::string,	ginger::MapTileset>	tiles;
 		std::map<std::string,	ginger::MapImage>	images;
 
@@ -29,14 +27,15 @@ namespace ginger {
 		std::map<std::string, std::vector<int>>		staticObjectsByTypes;
 		
 													/* -- ENABLE DRAW OBJECTS -- */
-		bool										enableDrawObjects = false;
+		bool										enableDrawObjects = true;
 
 		int											globalOffsetX = 0;
 		int											globalOffsetY = 0;
 
 		void										update();
+
 	private:
-		virtual void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+		void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
 			//Draw background layer
 			for (MapImageIterator it = images.begin(); it != images.end(); ++it) {
 				rt.draw(it->second);

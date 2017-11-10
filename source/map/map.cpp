@@ -139,28 +139,16 @@ namespace ginger {
 		int imagelayerOffsetY = atoi(imagelayer->Attribute("y"));
 		std::string imagelayerFile = imagelayerImage->Attribute("source");
 
-		//создадим и заполним структуру для image
-		try {
-			mapImage = new ginger::MapImage;
-		}
-		catch (std::bad_alloc &ab) {
-			std::string msg = "Ошибка: не удалось выделить память для блока mapImage (" + std::string(ab.what()) + ")";
-			_log->add(msg.c_str());
-			return 0;
-		}
-
-		mapImage->name = imagelayerName;
-
 		sf::Vector2<int> imagelayerSize;
 
-		_layers.images[imagelayerName] = *mapImage;
+		//_layers.images[imagelayerName] = *mapImage;
+		_layers.images[imagelayerName].name = imagelayerName;
 		_layers.images[imagelayerName].texture.loadFromFile(std::string("../assets/images/") + std::string(imagelayerFile));
 		_layers.images[imagelayerName].sprite.setTexture(_layers.images[imagelayerName].texture);
 		imagelayerSize.x = _layers.images[imagelayerName].texture.getSize().x;
 		imagelayerSize.y = _layers.images[imagelayerName].texture.getSize().y;
-		_layers.images[imagelayerName].sprite.setTextureRect(sf::IntRect(sf::Vector2<int>(-imagelayerOffsetX, -imagelayerOffsetY), imagelayerSize));
-
-		delete mapImage;
+		_layers.images[imagelayerName].sprite.setTextureRect(sf::IntRect(sf::Vector2<int>(0, 0), imagelayerSize));
+		_layers.images[imagelayerName].sprite.setPosition(sf::Vector2f(imagelayerOffsetX, imagelayerOffsetY));
 
 		return 1;
 	}
@@ -174,14 +162,15 @@ namespace ginger {
 		
 		while (objectItem) {
 			int index = _layers.staticObjects.size();
+			int objectId = atoi(objectItem->Attribute("id"));
 
-			int  		objectId = atoi(objectItem->Attribute("id"));
 			sf::IntRect	objectPosSize(
 				atoi(objectItem->Attribute("x")),
 				atoi(objectItem->Attribute("y")),
 				atoi(objectItem->Attribute("width")),
 				atoi(objectItem->Attribute("height"))
-				);
+			);
+
 			std::string objectName = objectItem->Attribute("name");
 			std::string objectType = "";
 			int			objectCollision = atoi(objectItem->Attribute("collision"));
@@ -190,30 +179,22 @@ namespace ginger {
 				objectType = objectItem->Attribute("type");
 			}
 
-			//создадим и заполним структуру для mapObject
-			try {
-				mapObject = new ginger::MapObject;
-			}
-			catch (std::bad_alloc &ab) {
-				std::string msg = "Ошибка: не удалось выделить память для блока mapObject (" + std::string(ab.what()) + ")";
-				_log->add(msg.c_str());
-				return 0;
-			}
+			ginger::MapObject mapObject;
 
-			mapObject->name = objectName;
-			mapObject->type = objectType;
-			mapObject->rect = objectPosSize;
-			mapObject->boundingBox.left = (float) objectPosSize.left;
-			mapObject->boundingBox.top = (float) objectPosSize.top;
-			mapObject->boundingBox.width = (float) objectPosSize.width;
-			mapObject->boundingBox.height = (float) objectPosSize.height;
+			mapObject.name = objectName;
+			mapObject.type = objectType;
+			mapObject.rect = objectPosSize;
+			mapObject.boundingBox.left = static_cast<float>(objectPosSize.left);
+			mapObject.boundingBox.top = static_cast<float>(objectPosSize.top);
+			mapObject.boundingBox.width = static_cast<float>(objectPosSize.width);
+			mapObject.boundingBox.height = static_cast<float>(objectPosSize.height);
 
 			if (objectCollision) {
-				mapObject->collision = true;
+				mapObject.collision = true;
 				_layers.staticObjectsByTypes[GINGER_MAP_TYPE_COLLISION].push_back(index);
 			}
 
-			_layers.staticObjects.push_back(*mapObject);
+			_layers.staticObjects.push_back(mapObject);
 
 			if (objectType.size()) {
 				if (_layers.staticObjectsByTypes.find(objectType) != _layers.staticObjectsByTypes.end()) {
@@ -226,7 +207,6 @@ namespace ginger {
 				}
 			}
 
-			delete mapObject;
 			objectItem = objectItem->NextSiblingElement();
 		}
 

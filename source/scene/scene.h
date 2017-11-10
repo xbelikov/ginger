@@ -12,6 +12,7 @@
 #include "../map/map.h"
 #include "scene_object.h"
 #include "player.h"
+#include "../entity/entity.h"
 
 
 namespace ginger {

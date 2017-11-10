@@ -52,6 +52,12 @@
     <Filter Include="Файлы исходного кода\scene">
       <UniqueIdentifier>{de52572e-dca7-4f8e-a8b8-5453136a5226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\components">
+      <UniqueIdentifier>{d21617ee-1aac-4640-83aa-462a7d1720da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\components">
+      <UniqueIdentifier>{1d71389c-4729-4a66-bd26-0899eb788f67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main\main.cpp">
@@ -90,9 +96,6 @@
     <ClCompile Include="..\source\map\layers.cpp">
       <Filter>Файлы исходного кода\map</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\npc\npc.cpp">
-      <Filter>Файлы исходного кода\npc</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\entity\entity.cpp">
       <Filter>Файлы исходного кода\entity</Filter>
     </ClCompile>
@@ -113,6 +116,24 @@
     </ClCompile>
     <ClCompile Include="..\source\map\map_tileset.cpp">
       <Filter>Файлы исходного кода\map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\entity\entity_parameters.cpp">
+      <Filter>Файлы исходного кода\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\components\component.cpp">
+      <Filter>Файлы исходного кода\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\components\character_stats.cpp">
+      <Filter>Файлы исходного кода\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\components\sprite.cpp">
+      <Filter>Файлы исходного кода\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\components\components.cpp">
+      <Filter>Файлы исходного кода\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\components\physical.cpp">
+      <Filter>Файлы исходного кода\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +184,27 @@
     </ClInclude>
     <ClInclude Include="..\source\map\map_tileset.h">
       <Filter>Заголовочные файлы\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\entity\entity_parameters.h">
+      <Filter>Заголовочные файлы\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\components\component.h">
+      <Filter>Заголовочные файлы\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\components\character_stats.h">
+      <Filter>Заголовочные файлы\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\components\sprite.h">
+      <Filter>Заголовочные файлы\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\components\components.h">
+      <Filter>Заголовочные файлы\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\npc\samurai.h">
+      <Filter>Заголовочные файлы\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\components\physical.h">
+      <Filter>Заголовочные файлы\components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

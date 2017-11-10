@@ -80,11 +80,16 @@
     <ClCompile Include="..\..\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="..\source\animation\animation.cpp" />
     <ClCompile Include="..\source\animation\animation_list.cpp" />
+    <ClCompile Include="..\source\components\character_stats.cpp" />
+    <ClCompile Include="..\source\components\component.cpp" />
+    <ClCompile Include="..\source\components\components.cpp" />
+    <ClCompile Include="..\source\components\physical.cpp" />
+    <ClCompile Include="..\source\components\sprite.cpp" />
     <ClCompile Include="..\source\entity\entity.cpp" />
+    <ClCompile Include="..\source\entity\entity_parameters.cpp" />
     <ClCompile Include="..\source\map\map_image.cpp" />
     <ClCompile Include="..\source\map\map_object.cpp" />
     <ClCompile Include="..\source\map\map_tileset.cpp" />
-    <ClCompile Include="..\source\npc\npc.cpp" />
     <ClCompile Include="..\source\game\game.cpp" />
     <ClCompile Include="..\source\logger\logger.cpp" />
     <ClCompile Include="..\source\main\main.cpp" />
@@ -98,7 +103,13 @@
   <ItemGroup>
     <ClInclude Include="..\source\animation\animation.h" />
     <ClInclude Include="..\source\animation\animation_list.h" />
+    <ClInclude Include="..\source\components\character_stats.h" />
+    <ClInclude Include="..\source\components\component.h" />
+    <ClInclude Include="..\source\components\components.h" />
+    <ClInclude Include="..\source\components\physical.h" />
+    <ClInclude Include="..\source\components\sprite.h" />
     <ClInclude Include="..\source\entity\entity.h" />
+    <ClInclude Include="..\source\entity\entity_parameters.h" />
     <ClInclude Include="..\source\map\map_image.h" />
     <ClInclude Include="..\source\map\map_object.h" />
     <ClInclude Include="..\source\map\map_tileset.h" />
@@ -108,6 +119,7 @@
     <ClInclude Include="..\source\main\main.h" />
     <ClInclude Include="..\source\map\map.h" />
     <ClInclude Include="..\source\map\layers.h" />
+    <ClInclude Include="..\source\npc\samurai.h" />
     <ClInclude Include="..\source\scene\player.h" />
     <ClInclude Include="..\source\scene\scene.h" />
     <ClInclude Include="..\source\scene\scene_object.h" />
